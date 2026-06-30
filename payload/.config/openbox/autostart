@@ -1,0 +1,101 @@
+## Autostart File ##
+###############################################################################
+# Openbox Workstation
+#
+# Autostart Configuration
+# Version : 1.1
+#
+# Base:
+# Ubuntu Community Hub Openbox Session (v1.0)
+# Original author: sbnwl
+#
+# Purpose:
+# Start desktop components and supporting services after Openbox login.
+###############################################################################
+
+##Disable DPMS
+#xset -dpms; xset s off &
+
+##Settings manager - Control GTK themes and all other desktop stuff
+##-- Unity 7, Gnome < 44, or Gnome >= 44 
+#unity-settings-daemon &
+#gnome-settings-daemon &
+#/usr/libexec/gsd-xsettings &
+
+##Compositor (Picom is the default, Compton retained for compatibility)
+#compton -cCGfF -o 0.38 -O 200 -I 200 -t 0 -l 0 -r 3 -D2 -m 0.88 &
+#compton -CGb &
+picom -b &
+
+##Background - Randomize wallpaper on login from a folder
+(sleep 1s && feh --recursive --randomize --bg-fill /usr/share/backgrounds) &
+
+##Sound Icon - Choose either volumeicon or pasystray
+#(sleep 1s && volumeicon) &
+#(sleep 1s && pasystray >/dev/null 2>&1) &
+
+##Screensaver - Evoke screensaver
+(sleep 1s && gnome-screensaver) &
+
+##Desktop Board - Conky desktop-applet for current WEATHER, TIME and RESOURCES
+(sleep 3s && conky) &
+
+## EITHER ## tint2+xfce4 panel
+(sleep 0.50s && tint2) &
+(sleep 0.25s && xfce4-panel) &
+
+## OR ## Plank dock
+#(sleep 0.25s && plank) &
+
+## OR ## Cairo dock panel
+#(sleep 0.25s && cairo-dock) &
+
+##numlockx
+#(sleep 1s && numlockx) &
+
+##PolicyKit - Handle graphical authentication dialogs
+(sleep 1s && ~/.config/openbox/general_scripts/launchPolkit) &
+
+#------------------------------------------------------------------------------#
+#   The following programs / applets are automatically listed as autostart     #
+#   services on installation, so there is no need to list them here in this    #
+#   (openbox autostart file).                                                  #
+#------------------------------------------------------------------------------#
+
+##Bluetooth support - Automatically listed in /etc/xdg/autostart/blueman.desktop
+#(sleep 1s && command -v blueman-applet >/dev/null 2>&1 && blueman-applet) &
+
+##Network applet - Automatically listed in /etc/xdg/autostart/nm-applet.desktop
+#(sleep 1s && command -v nm-applet >/dev/null 2>&1 && nm-applet) &
+
+##Guake terminal - Listed at first run in ~/.config/autostart/guake.desktop
+#(sleep 1s &&command -v guake >/dev/null 2>&1 && guake) &
+
+##jgmenu Menu - Docked in ~/.config/plank/dock1/launchers/jgmenu.dockitem
+#(sleep 0.75s && jgmenu_run) &
+
+#------------------------------------------------------------------------------#
+#   The following options were of choice in past. No longer using them now,    #
+#   though some of them might still be useful. Be sure to install the          #
+#   corresponding packages should you try to use them.                         #
+#------------------------------------------------------------------------------#
+
+##xfce4-power-manager
+#(sleep 2s && xfce4-power-manager) &
+
+##cairo dock panel
+#(sleep 1s && cairo-dock) &
+
+##Disable touchpad
+#/usr/bin/synclient TouchpadOff=1 &
+
+##Touchpad pointer speed (Adjust the number after "libinput Accel Speed" in range -0.01 to -1.00)
+#idd=$(xinput --list | grep 'SynPS/2 Synaptics TouchPad' | awk '{print $6}'| cut -d'=' -f2)
+#xinput set-prop $idd "libinput Accel Speed" -0.01 &
+
+##start proxy
+#export http_proxy=http://10.10.78.61:3128
+#export ftp_proxy=ftp://10.10.78.61:3128
+
+#####  ##awn (avant window navigator)
+#####  #(sleep 1s && avant-window-navigator) &

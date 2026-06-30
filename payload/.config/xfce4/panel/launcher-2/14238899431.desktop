@@ -1,0 +1,17 @@
+[Desktop Entry]
+Name=Files
+Comment=Access and organize files
+Exec=nautilus --new-window --no-desktop
+Icon=system-file-manager
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;Utility;Core;
+MimeType=inode/directory;application/x-gnome-saved-search;
+X-GNOME-Bugzilla-Bugzilla=GNOME
+X-GNOME-Bugzilla-Product=nemo
+X-GNOME-Bugzilla-Component=general
+X-GNOME-Bugzilla-Version=2.4.5
+X-XFCE-Source=file:///usr/share/applications/nemo.desktop
+Path=
+GenericName[en_US.UTF-8]=Launch File Manager

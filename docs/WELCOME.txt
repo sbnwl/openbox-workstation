@@ -1,0 +1,73 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║                  Openbox Workstation v1.1                            ║
+╚══════════════════════════════════════════════════════════════════════╝
+A lightweight, elegant and fully functional desktop environment
+built around Openbox and carefully integrated desktop components.
+
+Original Contributor / Developer
+Surendra Beniwal, surendra_beniwal@yahoo.co.in
+
+This project builds upon the original Openbox package through
+carefully documented improvements while preserving its lightweight
+philosophy.
+
+For complete documentation, refer to:
+- README.md
+- INSTALL.md
+- WORKSTATION.md
+- COMPONENT-MAP.md
+
+╔══════════════════════════════════════════════════════════════════════╗
+║                      KEYBOARD SHORTCUTS                              ║
+╚══════════════════════════════════════════════════════════════════════╝
+Here is a list of keyboard shortcuts available in
+Openbox Workstation.
+┌────────────────────────────┬─────────────────────────────────────────┐
+│   Shortcut (Key Combo)     │ Action                                  │
+├────────────────────────────┼─────────────────────────────────────────┤
+│   WINDOWS_key + E          │ Launch File Manager                     │
+│   WINDOWS_key + R          │ Launch Terminal                         │
+│   WINDOWS_key + Space      │ Launch Application Menu                 │
+│OR Alt + F1                 │ Launch Application Menu                 │
+├────────────────────────────┼─────────────────────────────────────────┤
+│   XF86Search               │ Open ChatGPT in Default Web Browser     │
+├────────────────────────────┼─────────────────────────────────────────┤
+│   Print                    │ Screenshot (Saved in ~/Pictures)        │
+│   Alt + Print              │ Active Window Screenshot                │
+│   Shift + Print            │ Selected Area Screenshot                │
+│   Ctrl + Shift + Print     │ Copy Selected Area to Clipboard         │
+├────────────────────────────┼─────────────────────────────────────────┤
+│   Ctrl + Alt + L           │ Lock Screen                             │
+│OR WINDOWS_key + L          │ Lock Screen                             │
+│   Ctrl + Alt + Backspace   │ Log Out (Confirmation Dialog)           │
+│   Play/Pause               │ Toggle Play/Pause                       │
+│   Stop                     │ Stop Playback                           │
+│   Previous                 │ Previous Track                          │
+│   Next                     │ Next Track                              │
+├────────────────────────────┼─────────────────────────────────────────┤
+│   WINDOWS_key + Left       │ Tile Window to Left Half                │
+│   WINDOWS_key + Right      │ Tile Window to Right Half               │
+│   WINDOWS_key + Up         │ Tile Window to Upper Half               │
+│   WINDOWS_key + Down       │ Tile Window to Lower Half               │
+│   WINDOWS_key + NUM5       │ Toggle Window Maximization              │
+│   WINDOWS_key + Home       │ Restore Normal Window Size              │
+│   WINDOWS_key + End        │ Compact Window                          │
+└────────────────────────────┴─────────────────────────────────────────┘
+
+╔══════════════════════════════════════════════════════════════════════╗
+║                       GETTING STARTED                                ║
+╚══════════════════════════════════════════════════════════════════════╝
+• Right-click on the desktop to access the Openbox menu items.
+• Right-click on the desktop and select 'Exit' to log out. 
+• Right-click → Next Login - Switch between two desktop layouts.
+  - Desktop layout A : Traditional panel
+  - Desktop layout B : Dock and launcher
+
+To switch desktop layouts, right-click on the desktop, choose
+'Next Login', and select your preferred layout.
+The selected layout becomes active after your next login.
+
+To change icons and GTK themes, launch "Appearance Theme" from the
+application menu.
+
+Enjoy Openbox Workstation!

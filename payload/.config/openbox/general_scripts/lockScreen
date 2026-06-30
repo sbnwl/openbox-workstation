@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if command -v dm-tool >/dev/null 2>&1; then
+    dm-tool lock
+elif command -v gnome-screensaver-command >/dev/null 2>&1; then
+    gnome-screensaver-command --lock
+elif command -v xdg-screensaver >/dev/null 2>&1; then
+    xdg-screensaver activate
+else
+    notify-send "Lock Screen" "No supported screen locker found."
+fi

@@ -1,0 +1,2 @@
+#!/bin/bash
+scrot -s new_scrot_shot.png && mv new_scrot_shot.png ~/Pictures/"$(date +"Screenshot from %Y-%m-%d %H-%M-%S.%3N").png"

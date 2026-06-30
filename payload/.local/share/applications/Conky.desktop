@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=0.9.4
+Type=Application
+Name=Conky
+Comment=Desktop integrated information applet
+Exec=conky -d
+StartupNotify=false
+Terminal=false
+Hidden=false" - https://wiki.archlinux.org/index.php/Conky
+Icon=/usr/share/icons/Adwaita/scalable/apps/utilities-system-monitor-symbolic.svg
+GenericName[en_IN]=Live Desktop Applet
+Comment[en_IN]=Desktop applet daemon

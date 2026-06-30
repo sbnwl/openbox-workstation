@@ -1,0 +1,21 @@
+#!/bin/bash
+cd "$HOME/.config/openbox/" || exit 1
+
+# Put an interactive question to be sure...
+zenity --question --text="Switch to panel mode at next login?"
+usrChoice=$?
+if [ "$usrChoice" -eq 0 ]; then
+#echo $usrChoice
+    # Comment the line with 'plank)' string
+      sed -i '/plank)/s/^#*/#/g' autostart
+
+    # Uncomment the line with 'tint2)' string
+      sed -i '/tint2)/s/^#*//g' autostart
+    # Uncomment the line with 'xfce4-panel)' string
+      sed -i '/xfce4-panel)/s/^#*//g' autostart
+    
+    # Notify the user
+    notify-send -t 0 \
+    "Next Login" \
+    "Panel styled desktop as default."
+fi

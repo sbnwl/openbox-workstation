@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<channel name="xfce4-panel" version="1.0">
+  <property name="configver" type="int" value="2"/>
+  <property name="panels" type="array">
+    <value type="int" value="2"/>
+    <property name="panel-2" type="empty">
+      <property name="position" type="string" value="p=8;x=47;y=1063"/>
+      <property name="plugin-ids" type="array">
+        <value type="int" value="1"/>
+        <value type="int" value="2"/>
+        <value type="int" value="3"/>
+      </property>
+      <property name="position-locked" type="bool" value="true"/>
+      <property name="size" type="uint" value="36"/>
+      <property name="length" type="uint" value="6"/>
+      <property name="background-style" type="uint" value="1"/>
+      <property name="background-color" type="array">
+        <value type="uint" value="0"/>
+        <value type="uint" value="0"/>
+        <value type="uint" value="0"/>
+        <value type="uint" value="65535"/>
+      </property>
+      <property name="length-adjust" type="bool" value="true"/>
+      <property name="background-alpha" type="uint" value="100"/>
+      <property name="enable-struts" type="bool" value="false"/>
+    </property>
+  </property>
+  <property name="plugins" type="empty">
+    <property name="plugin-3" type="string" value="launcher">
+      <property name="items" type="array">
+        <value type="string" value="14238496951.desktop"/>
+      </property>
+      <property name="show-label" type="bool" value="false"/>
+      <property name="disable-tooltips" type="bool" value="false"/>
+    </property>
+    <property name="plugin-2" type="string" value="launcher">
+      <property name="items" type="array">
+        <value type="string" value="14238899431.desktop"/>
+      </property>
+    </property>
+    <property name="plugin-1" type="string" value="whiskermenu">
+      <property name="favorites" type="array">
+      </property>
+      <property name="recent" type="array">
+        <value type="string" value="nm-connection-editor.desktop"/>
+        <value type="string" value="mpv.desktop"/>
+        <value type="string" value="thunderbird_thunderbird.desktop"/>
+        <value type="string" value="org.inkscape.Inkscape.desktop"/>
+        <value type="string" value="geany.desktop"/>
+        <value type="string" value="org.gnome.Evince.desktop"/>
+        <value type="string" value="lyx.desktop"/>
+        <value type="string" value="org.gnome.font-viewer.desktop"/>
+        <value type="string" value="firefox_firefox.desktop"/>
+        <value type="string" value="update-manager.desktop"/>
+      </property>
+    </property>
+  </property>
+</channel>

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Name=Firefox Web Browser
+GenericName=Web Browser
+Comment=Browse the World Wide Web
+Exec=firefox %u
+Terminal=false
+Icon=webbrowser-app
+Type=Application
+Categories=GTK;Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml+xml;text/mml;x-scheme-handler/http;x-scheme-handler/https;
+X-XFCE-Source=file:///usr/share/applications/chromium.desktop
+Path=
+StartupNotify=true

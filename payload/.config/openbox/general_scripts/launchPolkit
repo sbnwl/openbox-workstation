@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+if [ -x /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 ]; then
+    exec /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
+fi

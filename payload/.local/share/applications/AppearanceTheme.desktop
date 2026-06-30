@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0.0
+Type=Application
+Name=AppearanceTheme
+Comment=Appearance of fonts, desktop colors, and theme for icons, cursor and windows
+Exec=lxappearance
+StartupNotify=false
+Terminal=false
+Hidden=false"
+Icon=/usr/share/icons/Yaru/scalable/categories/preferences-desktop-appearance-symbolic.svg
+GenericName[en_IN]=Openbox theme and fonts
+Comment[en_IN]=Desktop theme and appearance
