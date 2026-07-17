@@ -13,6 +13,25 @@
 # Start desktop components and supporting services after Openbox login.
 ###############################################################################
 
+# -----------------------------------------------------------------------------
+# Environment
+# -----------------------------------------------------------------------------
+
+## Extend desktop-data search paths - Required by newer XFCE Panel
+##-- versions (>=4.20) to discover Whisker Menu, launchers and other
+##-- panel plugins.
+export XDG_DATA_DIRS="\
+/usr/share:\
+/usr/local/share:\
+/var/lib/snapd/desktop:\
+/var/lib/flatpak/exports/share:\
+${HOME}/.local/share/flatpak/exports/share:\
+${XDG_DATA_DIRS}"
+
+# -----------------------------------------------------------------------------
+# Desktop services
+# -----------------------------------------------------------------------------
+
 ##Disable DPMS
 #xset -dpms; xset s off &
 
