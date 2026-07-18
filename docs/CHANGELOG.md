@@ -48,6 +48,8 @@ replacements are evaluated.
 * Preserved Compton as a fallback compositor but no longer use it by default.
 * Updated multimedia keybindings from Clementine-specific commands to Playerctl.
 * Improved `autostart` header with project name, version and purpose.
+* Introduced a GTK CSS overlay that renders the XFCE Panel transparent, allowing Tint2 to provide the visible panel background while preserving Whisker Menu, launchers and panel plugins.
+* Added XDG desktop-data path initialization to improve XFCE Panel plugin discovery in minimal Openbox sessions and newer XFCE releases.
 * Improved `switch2Dock` and `switch2Panel` scripts with safer directory handling and quoted variables.
 * Clarified desktop modes:
   * Desktop layout A: Tint2 + XFCE Panel
@@ -60,8 +62,8 @@ replacements are evaluated.
 
 ### Desktop
 - Introduced two interchangeable desktop layouts:
-- Desktop Layout A – Traditional panel
-- Desktop Layout B – Dock and launcher
+  - Desktop Layout A – Traditional panel
+  - Desktop Layout B – Dock and launcher
 - Added menu-driven desktop layout switching for the next login.
 - Improved startup sequence through a reorganized Openbox autostart
 configuration.

@@ -14,17 +14,24 @@
       <property name="position-locked" type="bool" value="true"/>
       <property name="size" type="uint" value="36"/>
       <property name="length" type="uint" value="6"/>
-      <property name="background-style" type="uint" value="1"/>
+      <property name="background-style" type="uint" value="0"/>
       <property name="background-color" type="array">
-        <value type="uint" value="0"/>
-        <value type="uint" value="0"/>
-        <value type="uint" value="0"/>
-        <value type="uint" value="65535"/>
+        <value type="double" value="0"/>
+        <value type="double" value="0"/>
+        <value type="double" value="0"/>
+        <value type="double" value="0"/>
       </property>
       <property name="length-adjust" type="bool" value="true"/>
-      <property name="background-alpha" type="uint" value="100"/>
+      <property name="background-alpha" type="uint" value="0"/>
       <property name="enable-struts" type="bool" value="false"/>
+      <property name="background-rgba" type="array">
+        <value type="double" value="1"/>
+        <value type="double" value="1"/>
+        <value type="double" value="1"/>
+        <value type="double" value="1"/>
+      </property>
     </property>
+    <property name="dark-mode" type="bool" value="false"/>
   </property>
   <property name="plugins" type="empty">
     <property name="plugin-3" type="string" value="launcher">

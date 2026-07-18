@@ -28,8 +28,8 @@ Openbox Workstation officially supports two desktop layouts.
 ## Desktop Layout A — Traditional Desktop
 
 * Openbox
-* Tint2 (Taskbar + Notification Area)
-* XFCE Panel (Whisker Menu + Panel Plugins)
+* Tint2 (Panel Background + Taskbar + System Tray)
+* XFCE Panel (Whisker Menu + Launchers + Panel Plugins)
 
 ## Desktop Layout B — Dock-Oriented Desktop
 

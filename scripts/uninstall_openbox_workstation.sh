@@ -17,8 +17,6 @@ CONFIG_TARGETS=(
   "$HOME/.conkyrc"
   "$HOME/.compton.conf"
   "$HOME/WELCOME.txt"
-  "$HOME/.local/share/applications/AppearanceTheme.desktop"
-  "$HOME/.local/share/applications/Conky.desktop"
   "$HOME/.conky-google-now"
   "$HOME/.config/picom"
   "$HOME/.config/xfce4"
@@ -26,6 +24,18 @@ CONFIG_TARGETS=(
   "$HOME/.config/plank"
   "$HOME/.config/jgmenu"
   "$HOME/.config/openbox"
+  "$HOME/.config/gtk-3.0/gtk.css"
+  "$HOME/.config/gtk-3.0/xfce4-panel-tint2.css"
+)
+
+OPENBOX_LAUNCHERS=(
+  "$HOME/.local/share/applications/AppearanceTheme.desktop"
+  "$HOME/.local/share/applications/Conky.desktop"
+  "$HOME/.local/share/applications/obconf.desktop"
+  "$HOME/.local/share/applications/picom.desktop"
+  "$HOME/.local/share/applications/plank.desktop"
+  "$HOME/.local/share/applications/tint2.desktop"
+  "$HOME/.local/share/applications/tint2conf.desktop"
 )
 
 USER_AUTOSTART_OVERRIDES=(
@@ -94,6 +104,16 @@ log
 log "Removing user-level autostart overrides..."
 
 for path in "${USER_AUTOSTART_OVERRIDES[@]}"; do
+    if [ -e "$path" ]; then
+        rm -f "$path"
+        log "Removed: $path"
+    fi
+done
+
+log
+log "Removing Openbox-specific application launchers..."
+
+for path in "${OPENBOX_LAUNCHERS[@]}"; do
     if [ -e "$path" ]; then
         rm -f "$path"
         log "Removed: $path"

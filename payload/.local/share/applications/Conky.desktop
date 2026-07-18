@@ -11,3 +11,4 @@ Hidden=false" - https://wiki.archlinux.org/index.php/Conky
 Icon=/usr/share/icons/Adwaita/scalable/apps/utilities-system-monitor-symbolic.svg
 GenericName[en_IN]=Live Desktop Applet
 Comment[en_IN]=Desktop applet daemon
+OnlyShowIn=OPENBOX;

@@ -11,3 +11,4 @@ Hidden=false"
 Icon=/usr/share/icons/Yaru/scalable/categories/preferences-desktop-appearance-symbolic.svg
 GenericName[en_IN]=Openbox theme and fonts
 Comment[en_IN]=Desktop theme and appearance
+OnlyShowIn=OPENBOX;

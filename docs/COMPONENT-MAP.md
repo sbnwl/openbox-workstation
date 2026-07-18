@@ -19,7 +19,14 @@ Openbox Workstation
 ├── Desktop Layouts
 │   ├── Desktop Layout A
 │   │   ├── Tint2
+│   │   │   ├── Panel background
+│   │   │   ├── Taskbar
+│   │   │   └── System tray
+│   │   │
 │   │   └── XFCE Panel
+│   │       ├── Whisker Menu
+│   │       ├── Launchers
+│   │       └── Panel plugins
 │   │
 │   └── Desktop Layout B
 │       ├── Plank
@@ -81,6 +88,7 @@ Openbox Workstation
     │   └── scrot_scripts/
     │
     ├── ~/.config/tint2
+    ├── ~/.config/gtk-3.0
     ├── ~/.config/plank
     ├── ~/.config/xfce4
     ├── ~/.config/picom

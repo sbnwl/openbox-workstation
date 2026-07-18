@@ -57,27 +57,45 @@ copy_if_exists() {
     fi
 }
 
-copy_if_exists "$HOME/.gtkrc-2.0"
-copy_if_exists "$HOME/.conkyrc"
-copy_if_exists "$HOME/.compton.conf"
-copy_if_exists "$HOME/WELCOME.txt"
+CONFIG_TARGETS=(
+  "$HOME/.gtkrc-2.0"
+  "$HOME/.conkyrc"
+  "$HOME/.compton.conf"
+  "$HOME/WELCOME.txt"
+  "$HOME/.conky-google-now"
+  "$HOME/.config/picom"
+  "$HOME/.config/xfce4"
+  "$HOME/.config/tint2"
+  "$HOME/.config/plank"
+  "$HOME/.config/jgmenu"
+  "$HOME/.config/openbox"
+  "$HOME/.config/gtk-3.0/gtk.css"
+  "$HOME/.config/gtk-3.0/xfce4-panel-tint2.css"
+)
 
-copy_if_exists "$HOME/.local/share/applications/AppearanceTheme.desktop"
-copy_if_exists "$HOME/.local/share/applications/Conky.desktop"
+SHARED_ASSETS=(
+  "$HOME/.local/share/fonts/raleway-elementary"
+  "$HOME/.local/share/fonts/open-sans"
+  "$HOME/.local/share/themes/Mistral-Thin"
+)
 
-copy_if_exists "$HOME/.local/share/fonts/raleway-elementary"
-copy_if_exists "$HOME/.local/share/fonts/open-sans"
+OPENBOX_LAUNCHERS=(
+  "$HOME/.local/share/applications/AppearanceTheme.desktop"
+  "$HOME/.local/share/applications/Conky.desktop"
+  "$HOME/.local/share/applications/obconf.desktop"
+  "$HOME/.local/share/applications/picom.desktop"
+  "$HOME/.local/share/applications/plank.desktop"
+  "$HOME/.local/share/applications/tint2.desktop"
+  "$HOME/.local/share/applications/tint2conf.desktop"
+)
 
-copy_if_exists "$HOME/.local/share/themes/Mistral-Thin"
-
-copy_if_exists "$HOME/.conky-google-now"
-
-copy_if_exists "$HOME/.config/picom"
-copy_if_exists "$HOME/.config/xfce4"
-copy_if_exists "$HOME/.config/tint2"
-copy_if_exists "$HOME/.config/plank"
-copy_if_exists "$HOME/.config/jgmenu"
-copy_if_exists "$HOME/.config/openbox"
+for path in \
+    "${CONFIG_TARGETS[@]}" \
+    "${SHARED_ASSETS[@]}" \
+    "${OPENBOX_LAUNCHERS[@]}"
+do
+    copy_if_exists "$path"
+done
 
 cat > "$EXPORT_ROOT/manifest.txt" <<EOF
 Openbox Workstation Configuration Export

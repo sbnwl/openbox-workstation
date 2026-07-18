@@ -46,6 +46,7 @@ Typical directories include:
 ```text
 ~/.config/openbox/
 ~/.config/tint2/
+~/.config/gtk-3.0/
 ~/.config/plank/
 ~/.config/xfce4/
 ~/.config/jgmenu/
