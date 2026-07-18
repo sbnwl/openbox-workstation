@@ -12,7 +12,11 @@ MANIFEST="$STATE_DIR/install-manifest"
 ROLLBACK_DIR="$STATE_DIR/rollback"
 WORKDIR="$(mktemp -d)"
 
-CONFIG_URL="file:///home/sbn/Downloads/openbox_workstation_project_v1.1/scripts/openbox-workstation-config-v1.1.zip"
+REPO_OWNER="sbnwl"
+REPO_NAME="openbox-workstation"
+RELEASE_TAG="v1.1"
+
+CONFIG_URL="https://github.com/${REPO_OWNER}/${REPO_NAME}/archive/refs/tags/${RELEASE_TAG}.zip"
 
 # --------------------------------------------------
 # Core packages
@@ -260,16 +264,18 @@ esac
 # --------------------------------------------------
 
 log
-log "Downloading Openbox Workstation configuration..."
-curl -L "$CONFIG_URL" -o "$WORKDIR/openbox-workstation-config.zip"
+log "Downloading Openbox Workstation repository..."
+curl -fL "$CONFIG_URL" -o "$WORKDIR/openbox-workstation.zip"
 
-log "Extracting configuration..."
-unzip -q "$WORKDIR/openbox-workstation-config.zip" -d "$WORKDIR"
+log "Extracting repository..."
+unzip -q "$WORKDIR/openbox-workstation.zip" -d "$WORKDIR"
 
-CONFIG_SOURCE="$WORKDIR/openbox-workstation-config"
+REPO_ROOT="$(find "$WORKDIR" -mindepth 1 -maxdepth 1 -type d | head -n1)"
+CONFIG_SOURCE="$REPO_ROOT/payload"
 
 if [ ! -d "$CONFIG_SOURCE" ]; then
-    log "ERROR: Configuration archive does not contain openbox-workstation-config/"
+    log "ERROR: Repository payload directory not found:"
+    log "  $CONFIG_SOURCE"
     exit 1
 fi
 
