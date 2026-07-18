@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Openbox Workstation
+# Copyright (C) 2026 Surendra Beniwal
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+
 if command -v dm-tool >/dev/null 2>&1; then
     dm-tool lock
 elif command -v gnome-screensaver-command >/dev/null 2>&1; then

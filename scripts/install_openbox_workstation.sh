@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+# Openbox Workstation
+# Copyright (C) 2026 Surendra Beniwal
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
+
 set -euo pipefail
 
 PROJECT_NAME="Openbox Workstation"

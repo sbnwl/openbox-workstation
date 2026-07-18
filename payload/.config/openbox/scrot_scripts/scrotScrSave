@@ -1,2 +1,7 @@
 #!/bin/bash
+
+# Openbox Workstation
+# Copyright (C) 2026 Surendra Beniwal
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 scrot new_scrot_shot.png && mv new_scrot_shot.png ~/Pictures/"$(date +"Screenshot from %Y-%m-%d %H-%M-%S.%3N").png"

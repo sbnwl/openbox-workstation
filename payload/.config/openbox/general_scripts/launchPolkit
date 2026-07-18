@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# Openbox Workstation
+# Copyright (C) 2026 Surendra Beniwal
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+
 if [ -x /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 ]; then
     exec /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
 fi

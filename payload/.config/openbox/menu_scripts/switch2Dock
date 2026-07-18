@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# Openbox Workstation
+# Copyright (C) 2026 Surendra Beniwal
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 cd "$HOME/.config/openbox/" || exit 1
 
 # Put an interactive question to be sure...

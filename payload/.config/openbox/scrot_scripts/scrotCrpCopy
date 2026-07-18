@@ -1,2 +1,7 @@
 #!/bin/bash
+
+# Openbox Workstation
+# Copyright (C) 2026 Surendra Beniwal
+# SPDX-License-Identifier: GPL-3.0-or-later
+
 import png:- | xclip -selection c -t image/png

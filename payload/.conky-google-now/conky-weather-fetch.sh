@@ -1,4 +1,10 @@
 #!/bin/bash
+
+# Openbox Workstation
+# Copyright (C) 2026 Surendra Beniwal
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+
 # ============================================================
 # conky-weather-fetch.sh
 # Fetches weather data from Open-Meteo (free, no API key)
@@ -11,11 +17,11 @@
 # =====================================================
 # USER SETTINGS — edit these to set your city
 # =====================================================
-CITY="Jammu"            # City name shown on Conky
-REGION="Jammu and Kashmir"            # State / region name
+CITY="Kolkata"            # City name shown on Conky
+REGION="West Bengal"            # State / region name
 COUNTRY="India"         # Country name
-LAT="32.8028"           # Latitude  (get from maps.google.com)
-LON="74.8914"           # Longitude (get from maps.google.com)
+LAT="22.5726"           # Latitude  (get from maps.google.com)
+LON="88.3639"           # Longitude (get from maps.google.com)
 TIMEZONE="Asia/Kolkata" # Timezone  (from: timedatectl)
 WIND_UNIT="km/h"        # Wind unit: km/h or mph
 # =====================================================
