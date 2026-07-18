@@ -73,12 +73,11 @@ This project is based on the Ubuntu Community Hub tutorial:
 
 **"[2026] A Beautiful, Minimal and Workable Openbox-based Session on New & Old Machines"**
 
-**Original Contributor** / Developer:
-Surendra Beniwal (sbnwl)
+**Original Contributor** / Developer: sbnwl
 
-Version **1.0** preserves the original work as the historical reference implementation.
+Version **1.0** preserves the original work as the reference implementation.
 
-Openbox Workstation **v1.1** builds upon that foundation through carefully documented and incremental improvements while respecting the original architecture and philosophy.
+Openbox Workstation **v1.1** builds upon that foundation through improvements while keeping the original architecture and philosophy.
 
 ---
 
@@ -86,4 +85,20 @@ Openbox Workstation **v1.1** builds upon that foundation through carefully docum
 
 This project preserves attribution to the original author wherever applicable.
 
-Please refer to the project license for redistribution, modification and attribution terms.
+Please refer to the following project license for redistribution, modification and attribution terms.
+
+Copyright (C) 2026 Surendra Beniwal
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://gnu.org>.
+
