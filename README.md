@@ -89,6 +89,8 @@ Please refer to the following project license for redistribution, modification a
 
 Copyright (C) 2026 Surendra Beniwal
 
+    Openbox Workstation is licensed under the GNU General Public License 
+    v3.0 or later (GPL-3.0-or-later). See the LICENSE file for details.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
