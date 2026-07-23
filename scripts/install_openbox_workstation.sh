@@ -36,6 +36,7 @@ CORE_PACKAGES=(
   fonts-inter lxappearance
   scrot imagemagick xclip arandr
   policykit-1-gnome
+  xsettingsd
   curl unzip
 )
 
@@ -52,19 +53,21 @@ OPTIONAL_PACKAGES=(
 # --------------------------------------------------
 
 CONFIG_TARGETS=(
-  "$HOME/.gtkrc-2.0"
-  "$HOME/.conkyrc"
-  "$HOME/.compton.conf"
-  "$HOME/WELCOME.txt"
-  "$HOME/.conky-google-now"
-  "$HOME/.config/picom"
-  "$HOME/.config/xfce4"
-  "$HOME/.config/tint2"
-  "$HOME/.config/plank"
   "$HOME/.config/jgmenu"
   "$HOME/.config/openbox"
+  "$HOME/.config/picom"
+  "$HOME/.config/plank"
+  "$HOME/.config/tint2"
+  "$HOME/.config/xfce4"
+  "$HOME/.conky-google-now"
+  "$HOME/.conkyrc"
+  "$HOME/.compton.conf"
   "$HOME/.config/gtk-3.0/gtk.css"
+  "$HOME/.config/gtk-3.0/settings.ini"
   "$HOME/.config/gtk-3.0/xfce4-panel-tint2.css"
+  "$HOME/.gtkrc-2.0"
+  "$HOME/.xsettingsd"
+  "$HOME/WELCOME.txt"
 )
 
 # --------------------------------------------------
@@ -72,8 +75,8 @@ CONFIG_TARGETS=(
 # --------------------------------------------------
 
 OPENBOX_LAUNCHERS=(
-  "$HOME/.local/share/applications/AppearanceTheme.desktop"
-  "$HOME/.local/share/applications/Conky.desktop"
+  "$HOME/.local/share/applications/lxappearance.desktop"
+  "$HOME/.local/share/applications/conky.desktop"
   "$HOME/.local/share/applications/obconf.desktop"
   "$HOME/.local/share/applications/picom.desktop"
   "$HOME/.local/share/applications/plank.desktop"
@@ -98,6 +101,7 @@ SHARED_ASSETS=(
 USER_AUTOSTART_OVERRIDES=(
   "$HOME/.config/autostart/blueman.desktop"
   "$HOME/.config/autostart/nm-applet.desktop"
+  "$HOME/.config/autostart/guake.desktop"
 )
 
 # --------------------------------------------------
@@ -136,28 +140,7 @@ copy_to_rollback() {
     fi
 }
 
-create_autostart_override() {
-    local source_file="$1"
-    local target_file="$2"
-
-    if [ -f "$source_file" ]; then
-        mkdir -p "$(dirname "$target_file")"
-        cp "$source_file" "$target_file"
-
-        if grep -q '^NotShowIn=' "$target_file"; then
-            sed -i 's/^NotShowIn=.*/NotShowIn=GNOME;KDE;/' "$target_file"
-        else
-            printf '\nNotShowIn=GNOME;KDE;\n' >> "$target_file"
-        fi
-
-        log "Created user autostart override: $target_file"
-    else
-        log "Skipped autostart override, source missing: $source_file"
-    fi
-}
-
-ensure_openbox_session()
-{
+ensure_openbox_session() {
 # Ensure the Openbox session identifies itself as "OPENBOX", so that
 # XDG_CURRENT_DESKTOP returns "OPENBOX". This enables desktop-specific
 # integration such as OnlyShowIn=OPENBOX in application launchers.
@@ -181,25 +164,6 @@ ensure_openbox_session()
         "$session_file"
 }
 
-configure_openbox_launcher() {
-    local launcher_file="$1"
-
-    if [ ! -f "$launcher_file" ]; then
-        log "Skipped Openbox launcher, file missing: $launcher_file"
-        return 0
-    fi
-
-    if grep -q '^OnlyShowIn=' "$launcher_file"; then
-        sed -i \
-            's/^OnlyShowIn=.*/OnlyShowIn=OPENBOX;/' \
-            "$launcher_file"
-    else
-        printf '\nOnlyShowIn=OPENBOX;\n' >> "$launcher_file"
-    fi
-
-    log "Configured Openbox-only launcher: $launcher_file"
-}
-
 # --------------------------------------------------
 # Start installer
 # --------------------------------------------------
@@ -215,12 +179,6 @@ log
 
 if ! command -v apt >/dev/null 2>&1; then
     log "ERROR: This installer currently supports only apt-based distributions."
-    exit 1
-fi
-
-if [ "$CONFIG_URL" = "PASTE_PROJECT_CONFIG_ZIP_URL_HERE" ]; then
-    log "ERROR: CONFIG_URL is not set."
-    log "Edit this script and set CONFIG_URL to the project configuration ZIP URL."
     exit 1
 fi
 
@@ -248,7 +206,7 @@ sudo apt update
 sudo apt install -y "${CORE_PACKAGES[@]}"
 
 # --------------------------------------------------
-# Install optional packages
+# Install optional packages & update package state
 # --------------------------------------------------
 
 log
@@ -258,6 +216,15 @@ read -r answer
 case "$answer" in
     ""|y|Y|yes|YES)
         log "Installing optional packages..."
+
+        for pkg in "${OPTIONAL_PACKAGES[@]}"; do
+            if is_installed "$pkg"; then
+                OLD_PACKAGES+=("$pkg")
+            else
+                NEW_PACKAGES+=("$pkg")
+            fi
+        done
+
         sudo apt install -y "${OPTIONAL_PACKAGES[@]}"
         ;;
     *)
@@ -289,18 +256,27 @@ fi
 # Create rollback snapshot (useful for users)
 # --------------------------------------------------
 
-log
-log "Creating rollback snapshot..."
-rm -rf "$ROLLBACK_DIR"
-mkdir -p "$ROLLBACK_DIR"
+ROLLBACK_COMPLETE="$ROLLBACK_DIR/.complete"
 
-for path in \
-    "${CONFIG_TARGETS[@]}" \
-    "${SHARED_ASSETS[@]}" \
-    "${USER_AUTOSTART_OVERRIDES[@]}" \
-    "${OPENBOX_LAUNCHERS[@]}"; do
-    copy_to_rollback "$path"
-done
+log
+if [ -f "$ROLLBACK_COMPLETE" ]; then
+    log "Existing rollback snapshot found; preserving it."
+else
+    log "Creating rollback snapshot..."
+    rm -rf "$ROLLBACK_DIR"
+    mkdir -p "$ROLLBACK_DIR"
+
+    for path in \
+        "${CONFIG_TARGETS[@]}" \
+        "${OPENBOX_LAUNCHERS[@]}" \
+        "${SHARED_ASSETS[@]}" \
+        "${USER_AUTOSTART_OVERRIDES[@]}"; do
+        copy_to_rollback "$path"
+    done
+
+    touch "$ROLLBACK_COMPLETE"
+    log "Rollback snapshot completed."
+fi
 
 # --------------------------------------------------
 # Install workstation configuration
@@ -309,33 +285,6 @@ done
 log
 log "Installing workstation configuration..."
 cp -a "$CONFIG_SOURCE/." "$HOME/"
-
-# --------------------------------------------------
-# Configure Openbox-specific application launchers
-# --------------------------------------------------
-
-log
-log "Configuring Openbox-specific application launchers..."
-
-for launcher in "${OPENBOX_LAUNCHERS[@]}"; do
-    configure_openbox_launcher "$launcher"
-done
-
-# --------------------------------------------------
-# Create user-level autostart overrides
-# --------------------------------------------------
-
-log
-log "Creating user-level autostart overrides..."
-create_autostart_override \
-    "/etc/xdg/autostart/blueman.desktop" \
-    "$HOME/.config/autostart/blueman.desktop"
-create_autostart_override \
-    "/etc/xdg/autostart/nm-applet.desktop" \
-    "$HOME/.config/autostart/nm-applet.desktop"
-create_autostart_override \
-    "/usr/share/applications/guake.desktop" \
-    "$HOME/.config/autostart/guake.desktop"
 
 # --------------------------------------------------
 # Configure Openbox session identity
@@ -366,6 +315,15 @@ done
 
 cat >> "$MANIFEST" <<EOF
 
+[Openbox-Specific Application Launchers]
+EOF
+
+for path in "${OPENBOX_LAUNCHERS[@]}"; do
+    echo "$path" >> "$MANIFEST"
+done
+
+cat >> "$MANIFEST" <<EOF
+
 [Shared Assets Installed]
 EOF
 
@@ -384,20 +342,11 @@ done
 
 cat >> "$MANIFEST" <<EOF
 
-[Openbox-Specific Application Launchers]
-EOF
-
-for path in "${OPENBOX_LAUNCHERS[@]}"; do
-    echo "$path" >> "$MANIFEST"
-done
-
-cat >> "$MANIFEST" <<EOF
-
 [Openbox Session Configuration]
-Patched:
+Processed:
   /usr/share/xsessions/openbox.desktop
 
-Added:
+Required entry:
   DesktopNames=OPENBOX;
 EOF
 

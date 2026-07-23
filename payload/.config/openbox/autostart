@@ -41,6 +41,11 @@ ${XDG_DATA_DIRS}"
 #gnome-settings-daemon &
 #/usr/libexec/gsd-xsettings &
 
+## XSETTINGS Manager
+##-- Provides session-wide X11 font rendering (Xft), DPI and hinting.
+##-- Required for proper font rendering in applications such as MATLAB.
+(sleep 0.25 && xsettingsd) &
+
 ##Compositor (Picom is the default, Compton retained for compatibility)
 #compton -cCGfF -o 0.38 -O 200 -I 200 -t 0 -l 0 -r 3 -D2 -m 0.88 &
 #compton -CGb &

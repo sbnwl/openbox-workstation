@@ -76,7 +76,9 @@ CONFIG_TARGETS=(
   "$HOME/.config/jgmenu"
   "$HOME/.config/openbox"
   "$HOME/.config/gtk-3.0/gtk.css"
+  "$HOME/.config/gtk-3.0/settings.ini"
   "$HOME/.config/gtk-3.0/xfce4-panel-tint2.css"
+  "$HOME/.xsettingsd"
 )
 
 SHARED_ASSETS=(
@@ -86,8 +88,8 @@ SHARED_ASSETS=(
 )
 
 OPENBOX_LAUNCHERS=(
-  "$HOME/.local/share/applications/AppearanceTheme.desktop"
-  "$HOME/.local/share/applications/Conky.desktop"
+  "$HOME/.local/share/applications/lxappearance.desktop"
+  "$HOME/.local/share/applications/conky.desktop"
   "$HOME/.local/share/applications/obconf.desktop"
   "$HOME/.local/share/applications/picom.desktop"
   "$HOME/.local/share/applications/plank.desktop"
@@ -95,10 +97,17 @@ OPENBOX_LAUNCHERS=(
   "$HOME/.local/share/applications/tint2conf.desktop"
 )
 
+USER_AUTOSTART_OVERRIDES=(
+  "$HOME/.config/autostart/blueman.desktop"
+  "$HOME/.config/autostart/nm-applet.desktop"
+  "$HOME/.config/autostart/guake.desktop"
+)
+
 for path in \
     "${CONFIG_TARGETS[@]}" \
     "${SHARED_ASSETS[@]}" \
-    "${OPENBOX_LAUNCHERS[@]}"
+    "${OPENBOX_LAUNCHERS[@]}" \
+    "${USER_AUTOSTART_OVERRIDES[@]}"
 do
     copy_if_exists "$path"
 done

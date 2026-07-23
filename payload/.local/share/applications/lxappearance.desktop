@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Version=1.0.0
 Type=Application
-Name=AppearanceTheme
+Name=Appearance Theme
 Comment=Appearance of fonts, desktop colors, and theme for icons, cursor and windows
 Exec=lxappearance
 StartupNotify=false

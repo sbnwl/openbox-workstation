@@ -114,4 +114,5 @@ Icon=tint2conf
 Terminal=false
 Categories=Settings;DesktopSettings;
 MimeType=application/x-tint2-theme
+
 OnlyShowIn=OPENBOX;

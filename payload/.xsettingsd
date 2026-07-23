@@ -1,0 +1,46 @@
+# Openbox Workstation — XSETTINGS configuration
+#
+# Purpose:
+#   Publish session-wide X11 font-rendering and DPI settings through the
+#   XSETTINGS protocol. This is especially important in a bare Openbox
+#   session, where no desktop settings daemon is otherwise available.
+#
+# Why it is needed:
+#   Some applications, including Java/Swing applications such as MATLAB,
+#   do not obtain all font-rendering information directly from GTK config
+#   files. Their text rendering improves when an XSETTINGS manager is active.
+#
+# Scope:
+#   Keep this file limited to DPI, antialiasing, hinting and subpixel order.
+#   GTK theme, icon theme, cursor theme and GTK font family are configured
+#   separately in gtkrc-2.0 and gtk-3.0/settings.ini.
+#
+# Notes:
+#   - Xft/DPI is expressed as DPI multiplied by 1024.
+#   - 98304 means 96 DPI.
+#   - Only one XSETTINGS manager should run in the session.
+#   - Do not run xsettingsd (a standalone application) and xfsettingsd 
+#     (a XFCE4-settings daemon) simultaneously.
+
+Xft/DPI 98304
+Xft/Antialias 1
+Xft/Hinting 1
+Xft/HintStyle "hintmedium"
+Xft/RGBA "rgb"
+
+
+# THEREFORE, DO NOT ALLOW xsettingsd TO CONTROL GTK ELEMENTS LIKE BELOW.
+#
+#  - Net/ThemeName "Yaru"
+#  - Net/IconThemeName "Papirus"
+#  - Gtk/FontName "Inter 11"
+
+# This arrangement keeps the configuration predictable:
+#   xsettingsd
+#   └── DPI and font rendering for the X11 session
+#
+#   gtkrc-2.0
+#   └── GTK 2 appearance
+#   
+#   gtk-3.0/settings.ini
+#   └── GTK 3 appearance

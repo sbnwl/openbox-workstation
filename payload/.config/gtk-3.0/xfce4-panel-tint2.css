@@ -3,6 +3,7 @@
  *
  * Tint2 supplies the visible panel background.
  * XFCE Panel remains transparent to avoid double opacity.
+ * This is a user-defined GTK method to override xfconf (xml files)
  */
 
 .xfce4-panel {

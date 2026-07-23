@@ -9,7 +9,6 @@
 set -euo pipefail
 
 PROJECT_NAME="Openbox Workstation"
-PROJECT_SLUG="openbox-workstation"
 VERSION="1.1"
 STATE_DIR="$HOME/.local/share/openbox-workstation"
 LOG_DIR="$STATE_DIR/logs"
@@ -31,12 +30,14 @@ CONFIG_TARGETS=(
   "$HOME/.config/jgmenu"
   "$HOME/.config/openbox"
   "$HOME/.config/gtk-3.0/gtk.css"
+  "$HOME/.config/gtk-3.0/settings.ini"
   "$HOME/.config/gtk-3.0/xfce4-panel-tint2.css"
+  "$HOME/.xsettingsd"
 )
 
 OPENBOX_LAUNCHERS=(
-  "$HOME/.local/share/applications/AppearanceTheme.desktop"
-  "$HOME/.local/share/applications/Conky.desktop"
+  "$HOME/.local/share/applications/lxappearance.desktop"
+  "$HOME/.local/share/applications/conky.desktop"
   "$HOME/.local/share/applications/obconf.desktop"
   "$HOME/.local/share/applications/picom.desktop"
   "$HOME/.local/share/applications/plank.desktop"
@@ -47,6 +48,7 @@ OPENBOX_LAUNCHERS=(
 USER_AUTOSTART_OVERRIDES=(
   "$HOME/.config/autostart/blueman.desktop"
   "$HOME/.config/autostart/nm-applet.desktop"
+  "$HOME/.config/autostart/guake.desktop"
 )
 
 mkdir -p "$LOG_DIR"
@@ -58,7 +60,9 @@ log() {
 
 restore_from_rollback() {
     if [ -d "$ROLLBACK_DIR" ]; then
-        cp -a "$ROLLBACK_DIR/." "$HOME/"
+        find "$ROLLBACK_DIR" \
+            -mindepth 1 -maxdepth 1 ! -name '.complete' \
+            -exec cp -a -t "$HOME" -- {} +
         log "Restored rollback snapshot."
     else
         log "No rollback snapshot found."
@@ -134,7 +138,7 @@ if [ -f "$MANIFEST" ]; then
     mapfile -t NEW_PACKAGES < <(read_new_packages)
 
     if [ "${#NEW_PACKAGES[@]}" -gt 0 ]; then
-        echo
+        log
         echo "The following packages were installed by Openbox Workstation:"
         printf '  %s\n' "${NEW_PACKAGES[@]}"
         echo
