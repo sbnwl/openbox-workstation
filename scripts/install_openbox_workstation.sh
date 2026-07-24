@@ -47,15 +47,23 @@ CORE_PACKAGES=(
 OPTIONAL_PACKAGES=(
   # Convenience applications
       guake
-  # Base desktop components if starting from Ubuntu Server / mini.iso systems
-    # GRAPHICAL LOGIN MANAGER 
-      sddm
-    # MISSING GTK THEME, ICONS AND CURSOR
-      yaru-theme-gtk yaru-theme-icon dmz-cursor-theme
-    # DEPENDENCY TO PARSE *.desktop FILES IN ~/.config/autostart
-      python3-xdg
+  # Base desktop components if installing from Ubuntu Server / mini.iso systems
+    # GRAPHICAL LOGIN, GTK THEME, ICONS AND CURSOR
+      sddm yaru-theme-gtk yaru-theme-icon dmz-cursor-theme
+    # XDG AUTOSTART SUPPORT, GUI DIALOGUE SUPPORT
+      python3-xdg zenity
     # DESKTOP BACKGROUNDS
       gnome-backgrounds
+    # DESKTOP ACCESSORIES
+      gedit geany firefox loupe papers gnome-clocks baobab gnome-weather
+    # DESKTOP UTILITIES
+      speedcrunch meld gcolor3 pdfarranger screenruler mpv
+    # REMOTE ACCESS AND DISPLAY
+      remmina gnome-network-displays
+    # FILE MANAGER, TERMINAL
+      thunar ptyxis
+    # SYSTEM
+      synaptic eddy gnome-disk-utility
 )
 
 # --------------------------------------------------
