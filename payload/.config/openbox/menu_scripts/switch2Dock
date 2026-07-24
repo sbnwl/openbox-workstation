@@ -6,6 +6,13 @@
 
 cd "$HOME/.config/openbox/" || exit 1
 
+if ! command -v zenity >/dev/null 2>&1; then
+    notify-send \
+        "Openbox Workstation" \
+        "Package zenity not found. Please install zenity."
+    exit 1
+fi
+
 # Put an interactive question to be sure...
 zenity --question --text="Switch to dock mode at next login?"
 usrChoice=$?

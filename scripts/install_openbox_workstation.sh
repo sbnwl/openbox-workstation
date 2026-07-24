@@ -63,7 +63,7 @@ OPTIONAL_PACKAGES=(
     # FILE MANAGER, TERMINAL
       thunar ptyxis
     # SYSTEM
-      synaptic eddy gnome-disk-utility
+      synaptic gnome-disk-utility
 )
 
 # --------------------------------------------------
