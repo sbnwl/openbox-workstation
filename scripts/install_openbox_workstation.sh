@@ -45,7 +45,15 @@ CORE_PACKAGES=(
 # --------------------------------------------------
 
 OPTIONAL_PACKAGES=(
-  guake
+  # Convenience applications
+      guake
+  # Base desktop components if starting from Ubuntu Server / mini.iso systems
+    # GRAPHICAL LOGIN MANAGER 
+      sddm
+    # MISSING GTK THEME, ICONS AND CURSOR
+      yaru-theme-gtk yaru-theme-icon dmz-cursor-theme
+    # DEPENDENCY TO PARSE *.desktop FILES IN ~/.config/autostart
+      python3-xdg
 )
 
 # --------------------------------------------------
