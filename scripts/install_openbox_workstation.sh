@@ -20,7 +20,7 @@ WORKDIR="$(mktemp -d)"
 
 REPO_OWNER="sbnwl"
 REPO_NAME="openbox-workstation"
-RELEASE_TAG="v1.1"
+RELEASE_TAG="v${VERSION}"
 
 CONFIG_URL="https://github.com/${REPO_OWNER}/${REPO_NAME}/archive/refs/tags/${RELEASE_TAG}.zip"
 
@@ -54,6 +54,8 @@ OPTIONAL_PACKAGES=(
       yaru-theme-gtk yaru-theme-icon dmz-cursor-theme
     # DEPENDENCY TO PARSE *.desktop FILES IN ~/.config/autostart
       python3-xdg
+    # DESKTOP BACKGROUNDS
+      gnome-backgrounds
 )
 
 # --------------------------------------------------
