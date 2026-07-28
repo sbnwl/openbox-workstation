@@ -570,7 +570,7 @@ configure_conky() {
 	detect_weather_location
 	confirm_weather_location
 	patch_conky_files
-	echo "$TIMEZONE" > "$HOME/.conky-google-now/timezone"
+	echo "$TIMEZONE" >"$HOME/.conky-google-now/timezone"
 
 	echo "Conky successfully configured."
 }
@@ -623,7 +623,7 @@ configure_sddm() {
 	echo "SDDM successfully configured."
 }
 
-patch_sddm_theme
+configure_sddm
 
 #--------------------------------------------------
 # Picom configuration
@@ -640,6 +640,7 @@ configure_picom() {
 main() {
 	configure_obmenu
 	configure_conky
+	configure_sddm
 }
 
 main
