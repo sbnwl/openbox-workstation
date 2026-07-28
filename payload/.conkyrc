@@ -85,8 +85,8 @@ ${goto 20}${execi 300 cat ~/.cache/weather-data/fc0_lo}°${goto 90}${execi 300 c
 ${color7}${hr}${color}
 \
 #---Clock+Date---#
-${font Raleway:weight=Light:size=28}${voffset +20}${alignc}${time %a, %b %d, %Y}
-${font Raleway:weight=Light:size=72}${alignc}${time %H}${alignc}:${alignc}${time %M}
+${font Raleway:weight=Light:size=28}${voffset +20}${alignc}${execi 300 bash ~/.conky-google-now/conky_timezone.sh date}
+${font Raleway:weight=Light:size=72}${alignc}${execi 300 bash ~/.conky-google-now/conky_timezone.sh hour}${alignc}:${alignc}${execi 300 bash ~/.conky-google-now/conky_timezone.sh min}
 ${voffset -60}${color7}${hr}${color}
 \
 #---Resource Usage---#

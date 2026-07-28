@@ -1,0 +1,34 @@
+detect_weather_location()
+{
+    CITY="$DEFAULT_CITY"
+    REGION="$DEFAULT_REGION"
+    COUNTRY="$DEFAULT_COUNTRY"
+    LAT="$DEFAULT_LAT"
+    LON="$DEFAULT_LON"
+
+    local response
+
+    response="$(curl -fsSL --connect-timeout 5 https://ipapi.co/json/ 2>/dev/null)" || return 0
+
+    CITY=$(printf '%s' "$response" | jq -r '.city')
+    REGION=$(printf '%s' "$response" | jq -r '.region')
+    COUNTRY=$(printf '%s' "$response" | jq -r '.country_name')
+    LAT=$(printf '%s' "$response" | jq -r '.latitude')
+    LON=$(printf '%s' "$response" | jq -r '.longitude')
+
+    [ "$CITY" = "null" ] && CITY="$DEFAULT_CITY"
+    [ "$REGION" = "null" ] && REGION="$DEFAULT_REGION"
+    [ "$COUNTRY" = "null" ] && COUNTRY="$DEFAULT_COUNTRY"
+    [ "$LAT" = "null" ] && LAT="$DEFAULT_LAT"
+    [ "$LON" = "null" ] && LON="$DEFAULT_LON"
+
+    return 0
+}
+
+detect_weather_location
+
+echo $CITY
+echo $REGION
+echo $COUNTRY
+echo $LAT
+echo $LON

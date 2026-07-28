@@ -37,7 +37,7 @@ CORE_PACKAGES=(
   scrot imagemagick xclip arandr
   policykit-1-gnome
   xsettingsd
-  curl unzip
+  curl unzip jq
 )
 
 # --------------------------------------------------
@@ -48,20 +48,24 @@ OPTIONAL_PACKAGES=(
   # Convenience applications
       guake
   # Base desktop components if installing from Ubuntu Server / mini.iso systems
-    # GRAPHICAL LOGIN, GTK THEME, ICONS AND CURSOR
-      sddm yaru-theme-gtk yaru-theme-icon dmz-cursor-theme
+    # BOOT SCREEN, GRAPHICAL LOGIN, GTK THEME, ICONS AND CURSOR
+      plymouth-themes sddm
+      yaru-theme-gtk yaru-theme-icon dmz-cursor-theme
     # XDG AUTOSTART SUPPORT, GUI DIALOGUE SUPPORT
       python3-xdg zenity
+  # Full desktop experience applications 
     # DESKTOP BACKGROUNDS
       gnome-backgrounds
     # DESKTOP ACCESSORIES
-      gedit geany firefox loupe papers gnome-clocks baobab gnome-weather
+      gedit geany gnome-text-editor papers loupe firefox
+      gnome-clocks gnome-weather baobab
     # DESKTOP UTILITIES
-      speedcrunch meld gcolor3 pdfarranger screenruler mpv
+      speedcrunch meld pdfarranger gcolor3 screenruler 
+      amberol mpv
     # REMOTE ACCESS AND DISPLAY
       remmina gnome-network-displays
-    # FILE MANAGER, TERMINAL
-      thunar ptyxis
+    # FILE MANAGER, FILE-ROLLER, TERMINAL 
+      thunar file-roller ptyxis
     # SYSTEM
       synaptic gnome-disk-utility
 )

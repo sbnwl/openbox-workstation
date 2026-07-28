@@ -1,0 +1,27 @@
+detect_timezone_from_coordinates()
+{
+    local json_string
+
+    json_string="$(
+        curl -fsSL \
+            --connect-timeout 5 \
+            --max-time 10 \
+            -A "Openbox-Workstation/1.2" \
+            "https://timeapi.io/api/TimeZone/coordinate?latitude=${LAT}&longitude=${LON}" \
+            2>/dev/null
+    )" || {
+        echo "Unable to determine timezone from coordinates."
+        return 1
+    }
+
+    TIMEZONE="$(printf '%s' "$json_string" | jq -r '.timeZone // empty')"
+
+    if [ -z "$TIMEZONE" ]; then
+        echo "Timezone lookup failed."
+        return 1
+    fi
+
+    return 0
+}
+
+echo $TIMEZONE

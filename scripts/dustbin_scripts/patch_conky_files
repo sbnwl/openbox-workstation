@@ -1,0 +1,52 @@
+patch_conky_files()
+{
+    local conkyrc="$HOME/.conkyrc"
+    local weather_script="$HOME/.config/openbox/scripts/conky-weather-fetch.sh"
+
+    echo "Configuring Conky..."
+
+    #--------------------------------------------------
+    # Patch .conkyrc
+    #--------------------------------------------------
+
+    if [ -f "$conkyrc" ]; then
+        echo "  Patching $conkyrc"
+
+        sed -i \
+            -e "s|$DEFAULT_ETHERNET_IFACE|$ETHERNET_IFACE|g" \
+            -e "s|$DEFAULT_WIFI_IFACE|$WIFI_IFACE|g" \
+            "$conkyrc"
+    else
+        echo "  Warning: $conkyrc not found."
+    fi
+
+    #--------------------------------------------------
+    # Patch weather configuration
+    #--------------------------------------------------
+
+    if [ -f "$weather_script" ]; then
+        echo "  Patching $weather_script"
+
+        sed -i \
+            -e "s|CITY=\"$DEFAULT_CITY\"|CITY=\"$CITY\"|g" \
+            -e "s|REGION=\"$DEFAULT_REGION\"|REGION=\"$REGION\"|g" \
+            -e "s|COUNTRY=\"$DEFAULT_COUNTRY\"|COUNTRY=\"$COUNTRY\"|g" \
+            -e "s|LAT=\"$DEFAULT_LAT\"|LAT=\"$LAT\"|g" \
+            -e "s|LON=\"$DEFAULT_LON\"|LON=\"$LON\"|g" \
+            -e "s|TIMEZONE=\"$DEFAULT_TIMEZONE\"|TIMEZONE=\"$TIMEZONE\"|g" \
+            "$weather_script"
+    else
+        echo "  Warning: $weather_script not found."
+    fi
+
+    echo
+    echo "Detected configuration:"
+    echo "  Ethernet Interface : $ETHERNET_IFACE"
+    echo "  Wi-Fi Interface    : $WIFI_IFACE"
+    echo "  Timezone           : $TIMEZONE"
+    echo "  City               : $CITY"
+    echo "  Region             : $REGION"
+    echo "  Country            : $COUNTRY"
+    echo "  Latitude           : $LAT"
+    echo "  Longitude          : $LON"
+}

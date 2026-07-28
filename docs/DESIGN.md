@@ -149,11 +149,11 @@ Two workflows are supported.
 
 Openbox
 
-*
+|
 
 Tint2
 
-*
+|
 
 XFCE Panel
 
@@ -165,11 +165,11 @@ Designed for users who prefer a traditional desktop workflow.
 
 Openbox
 
-*
+|
 
 Plank
 
-*
+|
 
 jgmenu
 

@@ -67,4 +67,7 @@ To switch desktop layouts, right-click on the desktop, choose
 'Next Login', and select your preferred layout.
 The selected layout becomes active after your next login.
 
+To change icons and GTK themes, launch "Appearance Theme" from the
+application menu.
+
 Enjoy Openbox Workstation!

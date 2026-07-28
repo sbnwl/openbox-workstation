@@ -1,0 +1,18 @@
+confirm_weather_location()
+{
+    zenity --question \
+        --title="Openbox Workstation" \
+        --width=450 \
+        --text="Detected weather location
+
+City      : $CITY
+Region    : $REGION
+Country   : $COUNTRY
+
+Latitude  : $LAT
+Longitude : $LON
+
+Use this location?"
+}
+
+confirm_weather_location
