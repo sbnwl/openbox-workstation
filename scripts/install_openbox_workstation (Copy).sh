@@ -24,7 +24,6 @@ REPO_NAME="openbox-workstation"
 RELEASE_TAG="v${VERSION}"
 
 CONFIG_URL="https://github.com/${REPO_OWNER}/${REPO_NAME}/archive/refs/tags/${RELEASE_TAG}.zip"
-POSTINSTALL_URL="https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${RELEASE_TAG}/scripts/postinstallconfigure_openbox_workstation.sh"
 
 # --------------------------------------------------
 # Core packages
@@ -391,54 +390,6 @@ EOF
 for pkg in "${OLD_PACKAGES[@]}"; do
     echo "$pkg" >> "$MANIFEST"
 done
-
-# --------------------------------------------------
-# Optional post-install configuration
-# --------------------------------------------------
-
-log
-log "--------------------------------------------------"
-log
-log "Openbox Workstation has been installed successfully."
-log
-log "Would you like to configure it for this system now?"
-log
-log "This will:"
-log "  • Detect installed applications"
-log "  • Customize the Openbox menu"
-log "  • Configure Conky for your system"
-log "  • Apply compatibility fixes"
-log
-
-printf "Run post-install configuration now? [Y/n]: "
-read -r answer
-
-case "$answer" in
-    ""|y|Y|yes|YES)
-        log
-        log "Running post-install configuration..."
-        log
-
-        if ! curl -fsSL \
-            "$POSTINSTALL_URL" \
-            -o "$WORKDIR/postinstallconfigure_openbox_workstation.sh"; then
-            log "ERROR: Unable to download the post-install configurator."
-            exit 1
-        fi
-
-        chmod +x "$WORKDIR/postinstallconfigure_openbox_workstation.sh"
-
-        "$WORKDIR/postinstallconfigure_openbox_workstation.sh"
-        ;;
-    *)
-        log
-log "Post-install configuration skipped."
-log
-log "You can rerun it later by downloading:"
-log "  $POSTINSTALL_URL"
-log "or from the GitHub Release page for v${VERSION}."
-        ;;
-esac
 
 # --------------------------------------------------
 # Completion message
