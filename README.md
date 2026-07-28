@@ -1,6 +1,10 @@
 # Openbox Workstation
 
-*A lightweight, elegant and fully functional Openbox desktop for Ubuntu, Fedora and other Linux distributions.*
+*A lightweight, elegant and fully functional Openbox desktop environment for Ubuntu, Fedora and other Linux distributions.*
+
+![Traditional panel](screenshots/A_2026-06-30.png)
+
+![Dock and launcher](screenshots/B_2026-06-30.png)
 
 ---
 
