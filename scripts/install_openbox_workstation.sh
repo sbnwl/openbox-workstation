@@ -10,7 +10,7 @@
 set -euo pipefail
 
 PROJECT_NAME="Openbox Workstation"
-VERSION="1.3"
+VERSION="1.3.2"
 STATE_DIR="$HOME/.local/share/openbox-workstation"
 LOG_DIR="$STATE_DIR/logs"
 
@@ -157,7 +157,7 @@ copy_to_rollback() {
     local dest
 
     if [ -e "$src" ]; then
-        dest="$ROLLBACK_DIR/${src#$HOME/}"
+        dest="$ROLLBACK_DIR/${src#"$HOME"/}"
         mkdir -p "$(dirname "$dest")"
         cp -a "$src" "$dest"
         log "Rollback snapshot: $src"

@@ -334,6 +334,10 @@ detect_network_interfaces() {
 			[ -z "$ETHERNET_IFACE" ] && ETHERNET_IFACE="$iface"
 		fi
 	done
+	
+	# Fallback to defaults if no interfaces were detected
+	WIFI_IFACE="${WIFI_IFACE:-$DEFAULT_WIFI_IFACE}"
+	ETHERNET_IFACE="${ETHERNET_IFACE:-$DEFAULT_ETHERNET_IFACE}"
 }
 
 detect_timezone() {
@@ -622,8 +626,6 @@ configure_sddm() {
 
 	echo "SDDM successfully configured."
 }
-
-configure_sddm
 
 #--------------------------------------------------
 # Picom configuration
