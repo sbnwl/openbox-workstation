@@ -580,6 +580,12 @@ configure_conky() {
 }
 
 #--------------------------------------------------
+# XFCE4 configuration (launchers) ???
+#--------------------------------------------------
+# configure the launcher2 (file-manager)
+# and launcher3 (web-browser)
+
+#--------------------------------------------------
 # SDDM configuration
 #--------------------------------------------------
 
@@ -614,9 +620,9 @@ patch_sddm_theme() {
 
 	echo "  Patching $theme_conf"
 
-	sudo sed -i \
-		-e "s|^background=.*|background=$default_background|" \
-		"$theme_conf"
+	sudo sed -i -E \
+    -e "s|^(background[[:space:]]*=[[:space:]]*).*|\1\"$default_background\"|" \
+    "$theme_conf"
 }
 
 configure_sddm() {
