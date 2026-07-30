@@ -17,12 +17,12 @@
 # =====================================================
 # USER SETTINGS — edit these to set your city
 # =====================================================
-CITY="Kolkata"            # City name shown on Conky
-REGION="West Bengal"            # State / region name
+CITY="Kolkata"          # City name shown on Conky
+REGION="West Bengal"    # State / region name
 COUNTRY="India"         # Country name
-LAT="22.5726"           # Latitude  (get from maps.google.com)
-LON="88.3639"           # Longitude (get from maps.google.com)
-TIMEZONE="Asia/Kolkata" # Timezone  (from: timedatectl)
+LAT="22.5726"           # Latitude
+LON="88.3639"           # Longitude
+TIMEZONE="Asia/Kolkata" # Timezone
 WIND_UNIT="km/h"        # Wind unit: km/h or mph
 # =====================================================
 # CITY="New Delhi"        # City name shown on Conky

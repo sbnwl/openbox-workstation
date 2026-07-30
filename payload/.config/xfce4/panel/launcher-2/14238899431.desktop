@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Files
 Comment=Access and organize files
-Exec=nautilus --new-window --no-desktop
+Exec=nautilus --no-desktop --new-window
 Icon=system-file-manager
 Terminal=false
 Type=Application

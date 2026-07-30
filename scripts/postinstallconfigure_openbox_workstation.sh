@@ -18,39 +18,8 @@
 # have been installed.
 
 #--------------------------------------------------
-# obmenu configuration (ref: rt-click context menu)
+# GLOBAL FUNCTION DEFINITIONS
 #--------------------------------------------------
-
-# The code architecture is given below.
-#
-#    configure_obmenu()
-#    │
-#    ├── detect_file_manager()
-#    │      │
-#    │      ├── FILE_MANAGER_NAME
-#    │      └── FILE_MANAGER_CMD
-#    │
-#    ├── detect_web_browser()
-#    │      │
-#    │      ├── WEB_BROWSER_NAME
-#    │      └── WEB_BROWSER_CMD
-#    │
-#    ├── detect_terminal_emulator()
-#    │      │
-#    │      ├── TERMINAL_NAME
-#    │      └── TERMINAL_CMD
-#    │
-#    └── patch_obmenu_xml()
-#           │
-#           └── Patch ~/.config/openbox/menu.xml
-#                  ├── DEFAULT_FILE_MANAGER_CMD  → FILE_MANAGER_CMD
-#                  ├── DEFAULT_WEB_BROWSER_CMD   → WEB_BROWSER_CMD
-#                  └── DEFAULT_TERMINAL_CMD      → TERMINAL_CMD
-
-# Canonical menu commands (payload defaults in menu.xml)
-DEFAULT_FILE_MANAGER_CMD='nautilus --no-desktop --new-window'
-DEFAULT_WEB_BROWSER_CMD='firefox "www.google.com"'
-DEFAULT_TERMINAL_CMD='gnome-terminal'
 
 detect_file_manager() {
 	FILE_MANAGER_NAME=""
@@ -175,6 +144,41 @@ detect_terminal_emulator() {
 	return 1
 }
 
+#--------------------------------------------------
+# obmenu configuration (ref: rt-click context menu)
+#--------------------------------------------------
+
+# The code architecture is given below.
+#
+#    configure_obmenu()
+#    │
+#    ├── detect_file_manager()
+#    │      │
+#    │      ├── FILE_MANAGER_NAME
+#    │      └── FILE_MANAGER_CMD
+#    │
+#    ├── detect_web_browser()
+#    │      │
+#    │      ├── WEB_BROWSER_NAME
+#    │      └── WEB_BROWSER_CMD
+#    │
+#    ├── detect_terminal_emulator()
+#    │      │
+#    │      ├── TERMINAL_NAME
+#    │      └── TERMINAL_CMD
+#    │
+#    └── patch_obmenu_xml()
+#           │
+#           └── Patch ~/.config/openbox/menu.xml
+#                  ├── DEFAULT_FILE_MANAGER_CMD  → FILE_MANAGER_CMD
+#                  ├── DEFAULT_WEB_BROWSER_CMD   → WEB_BROWSER_CMD
+#                  └── DEFAULT_TERMINAL_CMD      → TERMINAL_CMD
+
+# Canonical menu commands (Note: synchronise with default menu.xml in payload)
+DEFAULT_FILE_MANAGER_CMD='nautilus --no-desktop --new-window'
+DEFAULT_WEB_BROWSER_CMD='firefox "www.google.com"'
+DEFAULT_TERMINAL_CMD='gnome-terminal'
+
 patch_obmenu_xml() {
 	local menu_file="$HOME/.config/openbox/menu.xml"
 
@@ -198,6 +202,39 @@ configure_obmenu() {
 }
 
 #--------------------------------------------------
+# XFCE4 configuration
+#--------------------------------------------------
+# configure the launcher2 (file-manager) and launcher3 (web-browser)
+
+configure_xfce4_launchers() {
+
+	log
+	log "Configuring XFCE4 launchers..."
+
+	local panel_dir="$HOME/.config/xfce4/panel"
+	local filemanager_launcher browser_launcher
+
+	filemanager_launcher="$panel_dir/launcher-2/"*.desktop
+	browser_launcher="$panel_dir/launcher-3/"*.desktop
+
+	if [[ -f "$filemanager_launcher" ]]; then
+		sed -i \
+			"s|^Exec=.*|Exec=$FILE_MANAGER_CMD|" \
+			"$filemanager_launcher"
+
+		log "  File manager launcher configured."
+	fi
+
+	if [[ -f "$browser_launcher" ]]; then
+		sed -i \
+			"s|^Exec=.*|Exec=$WEB_BROWSER_CMD|" \
+			"$browser_launcher"
+
+		log "  Web browser launcher configured."
+	fi
+}
+
+#--------------------------------------------------
 # conky configuration (ref: desktop information)
 #--------------------------------------------------
 
@@ -210,11 +247,11 @@ configure_obmenu() {
 #    │      ├── ETHERNET_IFACE
 #    │      └── WIFI_IFACE
 #    │
-#    ├── detect_timezone()
+#    ├── detect_user_timezone()
 #    │      │
 #    │      └── TIMEZONE
 #    │
-#    ├── detect_weather_location()
+#    ├── detect_user_weather_location()
 #    │      │
 #    │      ├── CITY
 #    │      ├── REGION
@@ -222,6 +259,14 @@ configure_obmenu() {
 #    │      ├── LAT
 #    │      ├── LON
 #    │      └── TIMEZONE (updated from detected location)
+#    ├── load_existing_weather_location()
+#    │              │
+#    │              ├── EXISTING_CITY
+#    │              ├── EXISTING_REGION
+#    │              ├── EXISTING_COUNTRY
+#    │              ├── EXISTING_LAT
+#    │              ├── EXISTING_LON
+#    │              └── EXISTING_TIMEZONE
 #    │
 #    ├── confirm_weather_location()
 #    │      │
@@ -260,11 +305,11 @@ configure_obmenu() {
 #              ├── LON
 #              └── TIMEZONE
 
-# Canonical .conkyrc defaults
+# Canonical .conkyrc config (Note: synchronise with default .conkyrc in payload)
 DEFAULT_ETHERNET_IFACE='enp0s3'
 DEFAULT_WIFI_IFACE='wlp0s20f3'
 
-# Canonical conky weather defaults
+# Canonical conky weather defaults (Note: synchronise with conky-weather-fetch.sh in payload)
 DEFAULT_CITY="Kolkata"
 DEFAULT_REGION="West Bengal"
 DEFAULT_COUNTRY="India"
@@ -334,13 +379,13 @@ detect_network_interfaces() {
 			[ -z "$ETHERNET_IFACE" ] && ETHERNET_IFACE="$iface"
 		fi
 	done
-	
+
 	# Fallback to defaults if no interfaces were detected
 	WIFI_IFACE="${WIFI_IFACE:-$DEFAULT_WIFI_IFACE}"
 	ETHERNET_IFACE="${ETHERNET_IFACE:-$DEFAULT_ETHERNET_IFACE}"
 }
 
-detect_timezone() {
+detect_user_timezone() {
 	TIMEZONE=""
 
 	if command -v timedatectl >/dev/null 2>&1; then
@@ -354,7 +399,7 @@ detect_timezone() {
 	[ -n "$TIMEZONE" ]
 }
 
-detect_weather_location() {
+detect_user_weather_location() {
 	CITY="$DEFAULT_CITY"
 	REGION="$DEFAULT_REGION"
 	COUNTRY="$DEFAULT_COUNTRY"
@@ -371,9 +416,33 @@ detect_weather_location() {
 	return 0
 }
 
+load_existing_weather_location() {
+    # Load the weather location currently configured in the installed
+    # Conky weather script. These values are presented as the defaults
+    # when the user chooses to enter coordinates manually.
+    
+    local WEATHER_SCRIPT="$HOME/.conky-google-now/conky-weather-fetch.sh"
+    
+    if [ ! -f "$WEATHER_SCRIPT" ]; then
+        return 0
+    fi
+
+    EXISTING_CITY=$(sed -n 's/^CITY="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
+    EXISTING_REGION=$(sed -n 's/^REGION="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
+    EXISTING_COUNTRY=$(sed -n 's/^COUNTRY="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
+    EXISTING_LAT=$(sed -n 's/^LAT="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
+    EXISTING_LON=$(sed -n 's/^LON="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
+    EXISTING_TIMEZONE=$(sed -n 's/^TIMEZONE="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
+}
+
 confirm_weather_location() {
 
+	load_existing_weather_location
+
 	get_lat_lon_from_user() {
+
+		LAT="$EXISTING_LAT"
+		LON="$EXISTING_LON"
 
 		local input
 
@@ -388,7 +457,7 @@ confirm_weather_location() {
 		echo "└──────────────────────────────────────────────────┘"
 		echo
 		echo "Enter your location coordinates."
-		echo "(Otherwise, press Enter to keep the current value)."
+		echo "(Press Enter to keep the existing value.)"
 		echo
 
 		while true; do
@@ -570,20 +639,14 @@ configure_conky() {
 	echo "Configuring Conky..."
 
 	detect_network_interfaces
-	detect_timezone
-	detect_weather_location
+	detect_user_timezone
+	detect_user_weather_location
 	confirm_weather_location
 	patch_conky_files
 	echo "$TIMEZONE" >"$HOME/.conky-google-now/timezone"
 
 	echo "Conky successfully configured."
 }
-
-#--------------------------------------------------
-# XFCE4 configuration (launchers) ???
-#--------------------------------------------------
-# configure the launcher2 (file-manager)
-# and launcher3 (web-browser)
 
 #--------------------------------------------------
 # SDDM configuration
@@ -621,8 +684,8 @@ patch_sddm_theme() {
 	echo "  Patching $theme_conf"
 
 	sudo sed -i -E \
-    -e "s|^(background[[:space:]]*=[[:space:]]*).*|\1\"$default_background\"|" \
-    "$theme_conf"
+		-e "s|^(background[[:space:]]*=[[:space:]]*).*|\1\"$default_background\"|" \
+		"$theme_conf"
 }
 
 configure_sddm() {
@@ -647,6 +710,7 @@ configure_picom() {
 
 main() {
 	configure_obmenu
+	configure_xfce4_launchers
 	configure_conky
 	configure_sddm
 }
