@@ -13,7 +13,7 @@
 		</item>
 		<item label="Web browser">
 			<action name="Execute">
-				<execute>firefox "www.mozilla.org"</execute>
+				<execute>firefox "www.google.com"</execute>
 			</action>
 		</item>
 		<!-- This requires the presence of the 'menu' package to work -->
