@@ -204,25 +204,28 @@ configure_obmenu() {
 #--------------------------------------------------
 # XFCE4 configuration
 #--------------------------------------------------
-# configure the launcher2 (file-manager) and launcher3 (web-browser)
 
-configure_xfce4_launchers() {
 
-	log
-	log "Configuring XFCE4 launchers..."
+patch_xfce4_launchers() {
+	local launcher_files
+	
+	echo "  Configuring XFCE4 launchers..."
 
 	local panel_dir="$HOME/.config/xfce4/panel"
 	local filemanager_launcher browser_launcher
 
-	filemanager_launcher="$panel_dir/launcher-2/"*.desktop
-	browser_launcher="$panel_dir/launcher-3/"*.desktop
+	launcher_files=( "$panel_dir/launcher-2/"*.desktop )
+	filemanager_launcher="${launcher_files[0]}"
+
+	launcher_files=( "$panel_dir/launcher-3/"*.desktop )
+	browser_launcher="${launcher_files[0]}"
 
 	if [[ -f "$filemanager_launcher" ]]; then
 		sed -i \
 			"s|^Exec=.*|Exec=$FILE_MANAGER_CMD|" \
 			"$filemanager_launcher"
 
-		log "  File manager launcher configured."
+		echo "  File manager launcher configured."
 	fi
 
 	if [[ -f "$browser_launcher" ]]; then
@@ -230,8 +233,18 @@ configure_xfce4_launchers() {
 			"s|^Exec=.*|Exec=$WEB_BROWSER_CMD|" \
 			"$browser_launcher"
 
-		log "  Web browser launcher configured."
+		echo "  Web browser launcher configured."
 	fi
+}
+
+configure_xfce4() {
+	echo "Configuring XFCE4..."
+	
+	detect_file_manager
+	detect_web_browser
+	patch_xfce4_launchers
+
+	echo "XFCE4 successfully configured."
 }
 
 #--------------------------------------------------
@@ -710,7 +723,7 @@ configure_picom() {
 
 main() {
 	configure_obmenu
-	configure_xfce4_launchers
+	configure_xfce4
 	configure_conky
 	configure_sddm
 }
