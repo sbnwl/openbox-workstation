@@ -350,7 +350,7 @@ patch_obmenu_xml() {
 	done <<EOF
 # Here is the routing table
 Terminal emulator|$TERMINAL_EMULATOR_EXEC
-File manager|$FILE_MANAGER_EXEC
+Home|$FILE_MANAGER_EXEC
 Web browser|$WEB_BROWSER_EXEC
 ObAutostart|$TEXT_EDITOR_NAME ~/.config/openbox/autostart
 Lock Screen|$LOCK_SCREEN_EXEC
