@@ -21,125 +21,275 @@
 # GLOBAL FUNCTION DEFINITIONS
 #--------------------------------------------------
 
+detect_terminal_emulator() {
+
+	local MISSING_APP_WARNING='zenity --warning --title="Application not installed" --text="No terminal emulator installed.\n\nPlease install ptyxis, terminator or another terminal app."'
+
+	# The 'command name' (*_NAME) and 'executable string' (*_EXEC) pair
+
+	TERMINAL_EMULATOR_NAME=""
+	TERMINAL_EMULATOR_EXEC=""
+
+	# The configuration works under order of priority of if...fi statements below.
+
+	if command -v ptyxis >/dev/null 2>&1; then
+		TERMINAL_EMULATOR_NAME="ptyxis"
+		TERMINAL_EMULATOR_EXEC="ptyxis --new-window"
+		return 0
+	fi
+
+	if command -v gnome-terminal >/dev/null 2>&1; then
+		TERMINAL_EMULATOR_NAME="gnome-terminal"
+		TERMINAL_EMULATOR_EXEC="gnome-terminal"
+		return 0
+	fi
+
+	if command -v konsole >/dev/null 2>&1; then
+		TERMINAL_EMULATOR_NAME="konsole"
+		TERMINAL_EMULATOR_EXEC="konsole"
+		return 0
+	fi
+
+	if command -v alacritty >/dev/null 2>&1; then
+		TERMINAL_EMULATOR_NAME="alacritty"
+		TERMINAL_EMULATOR_EXEC="alacritty"
+		return 0
+	fi
+
+	if command -v terminator >/dev/null 2>&1; then
+		TERMINAL_EMULATOR_NAME="terminator"
+		TERMINAL_EMULATOR_EXEC="terminator"
+		return 0
+	fi
+
+	if command -v xfce4-terminal >/dev/null 2>&1; then
+		TERMINAL_EMULATOR_NAME="xfce4-terminal"
+		TERMINAL_EMULATOR_EXEC="xfce4-terminal"
+		return 0
+	fi
+
+	if command -v lxterminal >/dev/null 2>&1; then
+		TERMINAL_EMULATOR_NAME="lxterminal"
+		TERMINAL_EMULATOR_EXEC="lxterminal"
+		return 0
+	fi
+
+	if command -v tilix >/dev/null 2>&1; then
+		TERMINAL_EMULATOR_NAME="tilix"
+		TERMINAL_EMULATOR_EXEC="tilix"
+		return 0
+	fi
+
+	TERMINAL_EMULATOR_EXEC="$MISSING_APP_WARNING"
+
+	return 1
+}
+
 detect_file_manager() {
+
+	local MISSING_APP_WARNING='zenity --warning --title="Application not installed" --text="No file manager installed.\n\nPlease install thunar, nemo or another file manager app."'
+
 	FILE_MANAGER_NAME=""
-	FILE_MANAGER_CMD=""
+	FILE_MANAGER_EXEC=""
 
 	# The configuration works under order of priority of if...fi statements below.
 
 	if command -v nautilus >/dev/null 2>&1; then
 		FILE_MANAGER_NAME="nautilus"
-		FILE_MANAGER_CMD="nautilus --no-desktop --new-window"
+		FILE_MANAGER_EXEC="nautilus --no-desktop --new-window"
 		return 0
 	fi
 
 	if command -v nemo >/dev/null 2>&1; then
 		FILE_MANAGER_NAME="nemo"
-		FILE_MANAGER_CMD="nemo"
+		FILE_MANAGER_EXEC="nemo"
 		return 0
 	fi
 
 	if command -v dolphin >/dev/null 2>&1; then
 		FILE_MANAGER_NAME="dolphin"
-		FILE_MANAGER_CMD="dolphin --new-window"
+		FILE_MANAGER_EXEC="dolphin --new-window"
 		return 0
 	fi
 
 	if command -v thunar >/dev/null 2>&1; then
 		FILE_MANAGER_NAME="thunar"
-		FILE_MANAGER_CMD="thunar"
+		FILE_MANAGER_EXEC="thunar"
 		return 0
 	fi
 
 	if command -v caja >/dev/null 2>&1; then
 		FILE_MANAGER_NAME="caja"
-		FILE_MANAGER_CMD="caja"
+		FILE_MANAGER_EXEC="caja"
 		return 0
 	fi
 
 	if command -v pcmanfm >/dev/null 2>&1; then
 		FILE_MANAGER_NAME="pcmanfm"
-		FILE_MANAGER_CMD="pcmanfm"
+		FILE_MANAGER_EXEC="pcmanfm"
 		return 0
 	fi
+
+	FILE_MANAGER_EXEC="$MISSING_APP_WARNING"
 
 	return 1
 }
 
 detect_web_browser() {
+
+	local MISSING_APP_WARNING='zenity --warning --title="Application not installed" --text="No web browser installed.\n\nPlease install Firefox, Chrome, Edge or another web browser."'
+
 	WEB_BROWSER_NAME=""
-	WEB_BROWSER_CMD=""
+	WEB_BROWSER_EXEC=""
 
 	# The configuration works under order of priority of if...fi statements below.
 
 	if command -v firefox >/dev/null 2>&1; then
 		WEB_BROWSER_NAME="firefox"
-		WEB_BROWSER_CMD="firefox www.google.com"
+		WEB_BROWSER_EXEC="firefox www.google.com"
 		return 0
 	fi
 
 	if command -v microsoft-edge-stable >/dev/null 2>&1; then
 		WEB_BROWSER_NAME="microsoft-edge-stable"
-		WEB_BROWSER_CMD="microsoft-edge-stable www.google.com"
+		WEB_BROWSER_EXEC="microsoft-edge-stable www.google.com"
 		return 0
 	fi
 
 	if command -v google-chrome-stable >/dev/null 2>&1; then
 		WEB_BROWSER_NAME="google-chrome-stable"
-		WEB_BROWSER_CMD="google-chrome-stable www.google.com"
+		WEB_BROWSER_EXEC="google-chrome-stable www.google.com"
 		return 0
 	fi
 
 	if command -v brave-browser-stable >/dev/null 2>&1; then
 		WEB_BROWSER_NAME="brave-browser-stable"
-		WEB_BROWSER_CMD="brave-browser-stable www.google.com"
+		WEB_BROWSER_EXEC="brave-browser-stable www.google.com"
 		return 0
 	fi
+
+	WEB_BROWSER_EXEC="$MISSING_APP_WARNING"
 
 	return 1
 }
 
-detect_terminal_emulator() {
-	TERMINAL_NAME=""
-	TERMINAL_CMD=""
+detect_text_editor() {
+
+	local MISSING_APP_WARNING='zenity --warning --title="Application not installed" --text="No text editor installed.\n\nPlease install gedit, geany or another text editor app."'
+
+	TEXT_EDITOR_NAME=""
+	TEXT_EDITOR_EXEC=""
 
 	# The configuration works under order of priority of if...fi statements below.
 
-	if command -v ptyxis >/dev/null 2>&1; then
-		TERMINAL_NAME="ptyxis"
-		TERMINAL_CMD="ptyxis"
+	if command -v gnome-text-editor >/dev/null 2>&1; then
+		TEXT_EDITOR_NAME="gnome-text-editor"
+		TEXT_EDITOR_EXEC="gnome-text-editor"
 		return 0
 	fi
 
-	if command -v gnome-terminal >/dev/null 2>&1; then
-		TERMINAL_NAME="gnome-terminal"
-		TERMINAL_CMD="gnome-terminal"
+	if command -v gedit >/dev/null 2>&1; then
+		TEXT_EDITOR_NAME="gedit"
+		TEXT_EDITOR_EXEC="gedit"
 		return 0
 	fi
 
-	if command -v konsole >/dev/null 2>&1; then
-		TERMINAL_NAME="konsole"
-		TERMINAL_CMD="konsole"
+	if command -v kate >/dev/null 2>&1; then
+		TEXT_EDITOR_NAME="kate"
+		TEXT_EDITOR_EXEC="kate"
 		return 0
 	fi
 
-	if command -v terminator >/dev/null 2>&1; then
-		TERMINAL_NAME="terminator"
-		TERMINAL_CMD="terminator"
+	if command -v geany >/dev/null 2>&1; then
+		TEXT_EDITOR_NAME="geany"
+		TEXT_EDITOR_EXEC="geany"
 		return 0
 	fi
 
-	if command -v xfce4-terminal >/dev/null 2>&1; then
-		TERMINAL_NAME="xfce4-terminal"
-		TERMINAL_CMD="xfce4-terminal"
+	if command -v xed >/dev/null 2>&1; then
+		TEXT_EDITOR_NAME="xed"
+		TEXT_EDITOR_EXEC="xed"
 		return 0
 	fi
 
-	if command -v lxterminal >/dev/null 2>&1; then
-		TERMINAL_NAME="lxterminal"
-		TERMINAL_CMD="lxterminal"
+	if command -v mousepad >/dev/null 2>&1; then
+		TEXT_EDITOR_NAME="mousepad"
+		TEXT_EDITOR_EXEC="mousepad"
 		return 0
 	fi
+
+	if command -v featherpad >/dev/null 2>&1; then
+		TEXT_EDITOR_NAME="featherpad"
+		TEXT_EDITOR_EXEC="featherpad"
+		return 0
+	fi
+
+	if command -v leafpad >/dev/null 2>&1; then
+		TEXT_EDITOR_NAME="leafpad"
+		TEXT_EDITOR_EXEC="leafpad"
+		return 0
+	fi
+
+	if command -v pluma >/dev/null 2>&1; then
+		TEXT_EDITOR_NAME="pluma"
+		TEXT_EDITOR_EXEC="pluma"
+		return 0
+	fi
+
+	TEXT_EDITOR_EXEC="$MISSING_APP_WARNING"
+
+	return 1
+}
+
+detect_lock_screen() {
+
+	local MISSING_APP_WARNING='zenity --warning --title="Application not installed" --text="No screen locking utility installed.\n\nPlease install dm-tool, gnome-screensaver or another utility."'
+
+	LOCK_SCREEN_NAME=""
+	LOCK_SCREEN_EXEC=""
+
+	# The configuration works under order of priority of if...fi statements below.
+
+	if command -v gnome-screensaver-command >/dev/null 2>&1; then
+		LOCK_SCREEN_NAME="gnome-screensaver-command"
+		LOCK_SCREEN_EXEC="gnome-screensaver-command --lock"
+		return 0
+	fi
+
+	if command -v dm-tool >/dev/null 2>&1; then
+		LOCK_SCREEN_NAME="dm-tool"
+		LOCK_SCREEN_EXEC="dm-tool lock"
+		return 0
+	fi
+
+	if command -v slock-secure-lock >/dev/null 2>&1; then
+		LOCK_SCREEN_NAME="slock-secure-lock"
+		LOCK_SCREEN_EXEC="slock-secure-lock"
+		return 0
+	fi
+
+	LOCK_SCREEN_EXEC="$MISSING_APP_WARNING"
+
+	return 1
+}
+
+detect_scrRes_tool() {
+
+	local MISSING_APP_WARNING='zenity --warning --title="Application not installed" --text="No screen resolution handling utility installed.\n\nPlease install arandr or similar utility."'
+
+	SCREEN_RES_NAME=""
+	SCREEN_RES_EXEC=""
+
+	# Detect screen resolution handling tool
+	# The configuration works under order of priority of if...fi statements below.
+
+	if command -v arandr >/dev/null 2>&1; then
+		SCREEN_RES_NAME="arandr"
+		SCREEN_RES_EXEC="arandr"
+		return 0
+	fi
+
+	SCREEN_RES_EXEC="$MISSING_APP_WARNING"
 
 	return 1
 }
@@ -155,49 +305,67 @@ detect_terminal_emulator() {
 #    ├── detect_file_manager()
 #    │      │
 #    │      ├── FILE_MANAGER_NAME
-#    │      └── FILE_MANAGER_CMD
+#    │      └── FILE_MANAGER_EXEC
 #    │
 #    ├── detect_web_browser()
 #    │      │
 #    │      ├── WEB_BROWSER_NAME
-#    │      └── WEB_BROWSER_CMD
+#    │      └── WEB_BROWSER_EXEC
 #    │
 #    ├── detect_terminal_emulator()
 #    │      │
-#    │      ├── TERMINAL_NAME
-#    │      └── TERMINAL_CMD
+#    │      ├── TERMINAL_EMULATOR_NAME
+#    │      └── TERMINAL_EMULATOR_EXEC
 #    │
 #    └── patch_obmenu_xml()
 #           │
 #           └── Patch ~/.config/openbox/menu.xml
-#                  ├── DEFAULT_FILE_MANAGER_CMD  → FILE_MANAGER_CMD
-#                  ├── DEFAULT_WEB_BROWSER_CMD   → WEB_BROWSER_CMD
-#                  └── DEFAULT_TERMINAL_CMD      → TERMINAL_CMD
+#                  ├── DEFAULT_TERMINAL_EMULATOR_EXEC 	→ TERMINAL_EMULATOR_EXEC
+#                  ├── DEFAULT_FILE_MANAGER_EXEC 		→ FILE_MANAGER_EXEC
+#                  └── DEFAULT_WEB_BROWSER_EXEC 		→ WEB_BROWSER_EXEC
 
 # Canonical menu commands (Note: synchronise with default menu.xml in payload)
-DEFAULT_FILE_MANAGER_CMD='nautilus --no-desktop --new-window'
-DEFAULT_WEB_BROWSER_CMD='firefox "www.google.com"'
-DEFAULT_TERMINAL_CMD='gnome-terminal'
 
 patch_obmenu_xml() {
+
 	local menu_file="$HOME/.config/openbox/menu.xml"
 
-	if [ ! -f "$menu_file" ]; then
+	[[ -f "$menu_file" ]] || {
 		echo "Error: $menu_file not found."
 		return 1
-	fi
+	}
 
-	sed -i \
-		-e "s|$DEFAULT_FILE_MANAGER_CMD|$FILE_MANAGER_CMD|g" \
-		-e "s|$DEFAULT_WEB_BROWSER_CMD|$WEB_BROWSER_CMD|g" \
-		-e "s|$DEFAULT_TERMINAL_CMD|$TERMINAL_CMD|g" \
-		"$menu_file"
+	local label exec_string
+	# Caution: The exec_string must never contain & or |
+
+	# Replace the label with executable string
+	while IFS='|' read -r label exec_string; do
+
+		[[ -z "$label" || "$label" =~ ^# ]] && continue
+
+		sed -i \
+			"/<item label=\"$label\">/,/<\/item>/ \
+			s|<execute>[^<]*</execute>|<execute>$exec_string</execute>|" \
+			"$menu_file"
+	done <<EOF
+# Here is the routing table
+Terminal emulator|$TERMINAL_EMULATOR_EXEC
+File manager|$FILE_MANAGER_EXEC
+Web browser|$WEB_BROWSER_EXEC
+ObAutostart|$TEXT_EDITOR_NAME ~/.config/openbox/autostart
+Lock Screen|$LOCK_SCREEN_EXEC
+Screen Resolution|$SCREEN_RES_EXEC
+EOF
 }
 
 configure_obmenu() {
+
+	detect_terminal_emulator
 	detect_file_manager
 	detect_web_browser
-	detect_terminal_emulator
+	detect_text_editor
+	detect_lock_screen
+	detect_scrRes_tool
 	patch_obmenu_xml
 }
 
@@ -205,24 +373,24 @@ configure_obmenu() {
 # XFCE4 configuration
 #--------------------------------------------------
 
-
 patch_xfce4_launchers() {
+
 	local launcher_files
-	
+
 	echo "  Configuring XFCE4 launchers..."
 
 	local panel_dir="$HOME/.config/xfce4/panel"
 	local filemanager_launcher browser_launcher
 
-	launcher_files=( "$panel_dir/launcher-2/"*.desktop )
+	launcher_files=("$panel_dir/launcher-2/"*.desktop)
 	filemanager_launcher="${launcher_files[0]}"
 
-	launcher_files=( "$panel_dir/launcher-3/"*.desktop )
+	launcher_files=("$panel_dir/launcher-3/"*.desktop)
 	browser_launcher="${launcher_files[0]}"
 
 	if [[ -f "$filemanager_launcher" ]]; then
 		sed -i \
-			"s|^Exec=.*|Exec=$FILE_MANAGER_CMD|" \
+			"s|^Exec=.*|Exec=$FILE_MANAGER_EXEC|" \
 			"$filemanager_launcher"
 
 		echo "  File manager launcher configured."
@@ -230,7 +398,7 @@ patch_xfce4_launchers() {
 
 	if [[ -f "$browser_launcher" ]]; then
 		sed -i \
-			"s|^Exec=.*|Exec=$WEB_BROWSER_CMD|" \
+			"s|^Exec=.*|Exec=$WEB_BROWSER_EXEC|" \
 			"$browser_launcher"
 
 		echo "  Web browser launcher configured."
@@ -238,8 +406,9 @@ patch_xfce4_launchers() {
 }
 
 configure_xfce4() {
+
 	echo "Configuring XFCE4..."
-	
+
 	detect_file_manager
 	detect_web_browser
 	patch_xfce4_launchers
@@ -331,6 +500,7 @@ DEFAULT_LON="88.3639"
 DEFAULT_TIMEZONE="Asia/Kolkata"
 
 parse_ipapi_location_json() {
+
 	local json_string="$1"
 
 	CITY=$(printf '%s' "$json_string" | jq -r '.city')
@@ -349,6 +519,7 @@ parse_ipapi_location_json() {
 }
 
 parse_nominatim_location_json() {
+
 	local json_string="$1"
 
 	CITY="$(printf '%s' "$json_string" | jq -r \
@@ -374,6 +545,7 @@ parse_nominatim_location_json() {
 }
 
 detect_network_interfaces() {
+
 	WIFI_IFACE=""
 	ETHERNET_IFACE=""
 
@@ -399,6 +571,7 @@ detect_network_interfaces() {
 }
 
 detect_user_timezone() {
+
 	TIMEZONE=""
 
 	if command -v timedatectl >/dev/null 2>&1; then
@@ -413,6 +586,7 @@ detect_user_timezone() {
 }
 
 detect_user_weather_location() {
+
 	CITY="$DEFAULT_CITY"
 	REGION="$DEFAULT_REGION"
 	COUNTRY="$DEFAULT_COUNTRY"
@@ -430,22 +604,23 @@ detect_user_weather_location() {
 }
 
 load_existing_weather_location() {
-    # Load the weather location currently configured in the installed
-    # Conky weather script. These values are presented as the defaults
-    # when the user chooses to enter coordinates manually.
-    
-    local WEATHER_SCRIPT="$HOME/.conky-google-now/conky-weather-fetch.sh"
-    
-    if [ ! -f "$WEATHER_SCRIPT" ]; then
-        return 0
-    fi
 
-    EXISTING_CITY=$(sed -n 's/^CITY="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
-    EXISTING_REGION=$(sed -n 's/^REGION="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
-    EXISTING_COUNTRY=$(sed -n 's/^COUNTRY="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
-    EXISTING_LAT=$(sed -n 's/^LAT="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
-    EXISTING_LON=$(sed -n 's/^LON="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
-    EXISTING_TIMEZONE=$(sed -n 's/^TIMEZONE="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
+	# Load the weather location currently configured in the installed
+	# Conky weather script. These values are presented as the defaults
+	# when the user chooses to enter coordinates manually.
+
+	local WEATHER_SCRIPT="$HOME/.conky-google-now/conky-weather-fetch.sh"
+
+	if [ ! -f "$WEATHER_SCRIPT" ]; then
+		return 0
+	fi
+
+	EXISTING_CITY=$(sed -n 's/^CITY="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
+	EXISTING_REGION=$(sed -n 's/^REGION="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
+	EXISTING_COUNTRY=$(sed -n 's/^COUNTRY="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
+	EXISTING_LAT=$(sed -n 's/^LAT="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
+	EXISTING_LON=$(sed -n 's/^LON="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
+	EXISTING_TIMEZONE=$(sed -n 's/^TIMEZONE="\([^"]*\)"/\1/p' "$WEATHER_SCRIPT")
 }
 
 confirm_weather_location() {
@@ -501,6 +676,7 @@ confirm_weather_location() {
 	}
 
 	detect_timezone_from_coords() {
+
 		local json_string
 
 		json_string="$(
@@ -526,6 +702,7 @@ confirm_weather_location() {
 	}
 
 	reverse_geocode_location() {
+
 		local json_string
 
 		json_string="$(
@@ -587,7 +764,10 @@ confirm_weather_location() {
 
 		3)
 			get_lat_lon_from_user
-			reverse_geocode_location
+			reverse_geocode_location || {
+				echo "Unable to determine location details."
+				echo "Existing values will be retained."
+			}
 			return
 			;;
 
@@ -599,6 +779,7 @@ confirm_weather_location() {
 }
 
 patch_conky_files() {
+
 	local conkyrc="$HOME/.conkyrc"
 	local weather_script="$HOME/.conky-google-now/conky-weather-fetch.sh"
 
@@ -649,6 +830,7 @@ patch_conky_files() {
 }
 
 configure_conky() {
+
 	echo "Configuring Conky..."
 
 	detect_network_interfaces
@@ -674,6 +856,7 @@ configure_conky() {
 #           └── Replace broken background path
 
 patch_sddm_theme() {
+
 	local theme_conf="/usr/share/sddm/themes/ubuntu-budgie-login/theme.conf"
 	local default_background="/usr/share/sddm/themes/ubuntu-budgie-login/backgrounds/default.jpg"
 	local backup="${theme_conf}.bak"
@@ -702,6 +885,7 @@ patch_sddm_theme() {
 }
 
 configure_sddm() {
+
 	echo "Configuring SDDM..."
 
 	patch_sddm_theme
@@ -714,7 +898,59 @@ configure_sddm() {
 #--------------------------------------------------
 
 configure_picom() {
+
 	:
+}
+
+#--------------------------------------------------
+# App configuration
+#--------------------------------------------------
+
+hide_desktop_entries() {
+
+	local list_file="$HOME/.config/obdesktop/hidden-desktop-entries.list"
+	local system_dir="/usr/share/applications"
+	local user_dir="$HOME/.local/share/applications"
+
+	[[ -f "$list_file" ]] || {
+		echo "Hidden desktop entries list not found: $list_file"
+		return
+	}
+
+	mkdir -p "$user_dir"
+
+	while IFS= read -r entry; do
+		# Skip blank lines and comments
+		[[ -z "$entry" || "$entry" =~ ^[[:space:]]*# ]] && continue
+
+		local system_entry="$system_dir/$entry"
+		local user_entry="$user_dir/$entry"
+
+		# Skip if the desktop entry is not installed
+		[[ -f "$system_entry" ]] || continue
+
+		[[ -f "$user_entry" ]] || cp "$system_entry" "$user_entry"
+
+		if grep -q '^NoDisplay=' "$user_entry"; then
+			sed -i 's/^NoDisplay=.*/NoDisplay=true/' "$user_entry"
+		else
+			printf '\nNoDisplay=true\n' >>"$user_entry"
+		fi
+
+	done <"$list_file"
+
+	update-desktop-database "$user_dir" >/dev/null 2>&1 || true
+
+	echo "  Selected desktop entries hidden."
+}
+
+configure_apps() {
+
+	echo "Configuring apps..."
+
+	hide_desktop_entries
+
+	echo "Apps successfully configured."
 }
 
 #--------------------------------------------------
@@ -722,10 +958,12 @@ configure_picom() {
 #--------------------------------------------------
 
 main() {
+
 	configure_obmenu
 	configure_xfce4
 	configure_conky
 	configure_sddm
+	configure_apps
 }
 
 main
