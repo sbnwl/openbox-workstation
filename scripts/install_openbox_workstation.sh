@@ -10,7 +10,7 @@
 set -euo pipefail
 
 PROJECT_NAME="Openbox Workstation"
-VERSION="1.3.3"
+VERSION="1.4"
 STATE_DIR="$HOME/.local/share/openbox-workstation"
 LOG_DIR="$STATE_DIR/logs"
 
