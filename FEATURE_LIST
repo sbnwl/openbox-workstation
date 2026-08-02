@@ -1,0 +1,53 @@
+# Feature list 
+Feature requirements and changes are described in this document.
+  - Already it is a X.org compatible framework
+  - Try to keep the same framework friendly/compatible with wayland (labwc) 
+  - (How? Suggestions and discussions invited)
+
+## Decided after releasing the version v1.4
+
+### CHANGE 1  
+- Openbox icon upgrade
+  - main icon upgrade
+  - taskbar wmclass support
+
+### FEATURE 1 
+- Openbox buttons size enlargement (without increasing titlebar height)
+  - button height and width enlarge
+  - click-hit area visible on hover
+  - action_hover.svg or action_hover.xbm (action = min / mix / close)
+
+### FEATURE 2 
+- Right-click context menu for 'Open in terminal' in file manager
+  - context manager is shown when clicked on empty area in file manager
+  - File managers = Thunar / Nemo / PCManFM?
+  - (inspired by Nautilus which already has this support)
+
+### FEATURE 3 
+- Right-click context menu for comparing files in file manager (via meld)
+  - menu-entries = 'Compare' / 'Compare Later' / 'Compare with' 
+  - menu items dynamically shown depending on pre-selection
+  - zero selected file ==> No compare menu-item
+  - one selected file  ==> 'Compare Later' and 'Compare to' available
+  - two selected files ==> 'Compare' (mutually) and 'Compare to' to compare 
+with previously selected 'Compare Later')
+  - (inspired by Nautilus which already has this support via *nautilus-compare* 
+package)
+
+### FEATURE 4 
+- Right-click context menu to 'Compress' files in file manager (via zip)
+  - menu entry = 'Compress'
+  - one or more selected files/folders ==> offer the context-menu 
+  - decide compression algorithm (with subsequent an interactive dialogue box)
+  - (inspired by Nautilus which already has this support)
+
+### FEATURE 5 
+- Tiling when pressed-to-edge
+
+### FEATURE 6 
+- Protocol for homogeneous theme (light/dark) support across GTK2/3/4 apps
+  - put only two themes in openbox -- Mistral (dark) and Obworks (light)
+  - theme change via *obconf* utility, which should affect all app themes (via 
+hooks? to config files?)  
+  
+  

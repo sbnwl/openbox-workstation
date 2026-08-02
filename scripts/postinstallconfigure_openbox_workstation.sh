@@ -167,6 +167,12 @@ detect_web_browser() {
 		WEB_BROWSER_EXEC="brave-browser-stable www.google.com"
 		return 0
 	fi
+	
+	if command -v chromium-browser >/dev/null 2>&1; then
+		WEB_BROWSER_NAME="chromium-browser"
+		WEB_BROWSER_EXEC="chromium-browser www.google.com"
+		return 0
+	fi
 
 	WEB_BROWSER_EXEC="$MISSING_APP_WARNING"
 
@@ -405,6 +411,29 @@ patch_xfce4_launchers() {
 	fi
 }
 
+patch_xfce4_helpers() {
+
+    local helpers_rc="$HOME/.config/xfce4/helpers.rc"
+
+    mkdir -p "$(dirname "$helpers_rc")"
+    touch "$helpers_rc"
+
+    update_setting() {
+        local key="$1"
+        local value="$2"
+
+        if grep -q "^${key}=" "$helpers_rc"; then
+            sed -i "s|^${key}=.*|${key}=${value}|" "$helpers_rc"
+        else
+            printf '%s=%s\n' "$key" "$value" >> "$helpers_rc"
+        fi
+    }
+
+    update_setting "FileManager" "$FILE_MANAGER_NAME"
+    update_setting "TerminalEmulator" "$TERMINAL_EMULATOR_NAME"
+    update_setting "WebBrowser" "$WEB_BROWSER_NAME"
+}
+
 configure_xfce4() {
 
 	echo "Configuring XFCE4..."
@@ -412,6 +441,8 @@ configure_xfce4() {
 	detect_file_manager
 	detect_web_browser
 	patch_xfce4_launchers
+	detect_terminal_emulator
+	patch_xfce4_helpers
 
 	echo "XFCE4 successfully configured."
 }
